@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana do Consumidor - Personal Trainer Academy</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            DEFAULT: '#FEBE10',
+                            hover: '#e5ab0e' 
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Ticker Tape Contínuo Perfeito */
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-ticker {
+            display: flex;
+            width: max-content;
+            animation: ticker 25s linear infinite;
+        }
+        
+        /* Efeitos de brilho avançados */
+        .glow-hover:hover {
+            box-shadow: 0 0 25px rgba(254, 190, 16, 0.2);
+        }
+        .btn-glow {
+            box-shadow: 0 0 30px -5px rgba(254, 190, 16, 0.5);
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 45px 0px rgba(254, 190, 16, 0.7);
+        }
+
+        /* Ocultar barra de rolagem onde necessário */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Modal lead */
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+        }
+        .modal-phone-wrap {
+            display: flex;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #27272a;
+        }
+        .modal-phone-prefix {
+            background: #FEBE10;
+            color: #18181b;
+            padding: 0.75rem 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .modal-phone-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 0.75rem 1rem;
+            color: white;
+            outline: none;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .lead-modal-pós[aria-hidden="false"] { display: flex !important; }
+        .lead-modal-pós[aria-hidden="true"] { display: none !important; }
+
+        /* ========== Animações de entrada ========== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-24px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(24px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.92); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes blurIn {
+            from { opacity: 0; filter: blur(8px); }
+            to { opacity: 1; filter: blur(0); }
+        }
+
+        .animate-on-load {
+            opacity: 0;
+            animation-duration: 0.7s;
+            animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+            animation-fill-mode: forwards;
+        }
+        .animate-on-load.fade-in-up { animation-name: fadeInUp; }
+        .animate-on-load.fade-in-down { animation-name: fadeInDown; }
+        .animate-on-load.fade-in-left { animation-name: fadeInLeft; }
+        .animate-on-load.fade-in-right { animation-name: fadeInRight; }
+        .animate-on-load.fade-in { animation-name: fadeIn; }
+        .animate-on-load.scale-in { animation-name: scaleIn; }
+        .animate-on-load.blur-in { animation-name: blurIn; }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        .delay-600 { animation-delay: 0.6s; }
+        .delay-700 { animation-delay: 0.7s; }
+        .delay-800 { animation-delay: 0.8s; }
+
+        /* Animações ao entrar na viewport */
+        [data-animate] {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        [data-animate].in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        [data-animate="left"] { transform: translateX(-36px); }
+        [data-animate="left"].in-view { transform: translateX(0); }
+        [data-animate="right"] { transform: translateX(36px); }
+        [data-animate="right"].in-view { transform: translateX(0); }
+        [data-animate="scale"] { transform: scale(0.96); }
+        [data-animate="scale"].in-view { transform: scale(1); }
+        [data-animate="fade"] { transform: none; }
+
+        [data-animate-delay="1"] { transition-delay: 0.1s; }
+        [data-animate-delay="2"] { transition-delay: 0.2s; }
+        [data-animate-delay="3"] { transition-delay: 0.3s; }
+        [data-animate-delay="4"] { transition-delay: 0.4s; }
+        [data-animate-delay="5"] { transition-delay: 0.5s; }
+        [data-animate-delay="6"] { transition-delay: 0.6s; }
+
+        /* Transições gerais em elementos interativos (não sobrescrever cards da seção módulos) */
+        a[href], button, details summary {
+            transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+        }
+        /* Exceção: [data-open-lead-modal] fora de #modulos */
+        body a[href][data-open-lead-modal]:not(#modulos a[href][data-open-lead-modal]) {
+            transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* ========== Seção Módulos – garantir hover e transições ========== */
+        #modulos .modulos-cards-wrap {
+            display: flex;
+            flex: 1;
+            min-height: 0;
+            min-width: 0;
+        }
+        #modulos .modulos-card {
+            flex: 1 1 0%;
+            min-width: 0;
+            transition: flex 800ms cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease, border-color 0.3s ease;
+        }
+        #modulos .modulos-card:hover,
+        #modulos .modulos-card.modulos-card-active,
+        #modulos .modulos-card:focus-visible {
+            flex: 3.5 1 0%;
+        }
+        #modulos .modulos-card img.modulos-card-bg {
+            transition: opacity 1s ease, transform 1s ease, filter 0.8s ease;
+        }
+        #modulos .modulos-card:hover img.modulos-card-bg,
+        #modulos .modulos-card.modulos-card-active img.modulos-card-bg,
+        #modulos .modulos-card:focus-visible img.modulos-card-bg {
+            opacity: 0.9;
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+        #modulos .modulos-card .modulos-card-overlay {
+            transition: opacity 0.7s ease;
+        }
+        #modulos .modulos-card:hover .modulos-card-overlay,
+        #modulos .modulos-card.modulos-card-active .modulos-card-overlay,
+        #modulos .modulos-card:focus-visible .modulos-card-overlay {
+            opacity: 0.7;
+        }
+        #modulos .modulos-card .modulos-card-icon {
+            transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease, transform 0.5s ease;
+        }
+        #modulos .modulos-card .modulos-card-desc {
+            transition: opacity 800ms ease-in-out, max-height 800ms ease-in-out;
+        }
+        #modulos .modulos-card:hover .modulos-card-desc,
+        #modulos .modulos-card.modulos-card-active .modulos-card-desc,
+        #modulos .modulos-card:focus-visible .modulos-card-desc {
+            opacity: 1;
+            max-height: 200px;
+        }
+        #modulos .modulos-card .modulos-card-desc .modulos-card-cta {
+            transition: opacity 0.7s ease 0.1s;
+        }
+        #modulos .modulos-card:hover .modulos-card-cta,
+        #modulos .modulos-card.modulos-card-active .modulos-card-cta,
+        #modulos .modulos-card:focus-visible .modulos-card-cta {
+            opacity: 1;
+        }
+        #modulos .modulos-card .modulos-card-logo {
+            transition: opacity 0.5s ease;
+        }
+        #modulos .modulos-card:hover .modulos-card-logo,
+        #modulos .modulos-card.modulos-card-active .modulos-card-logo,
+        #modulos .modulos-card:focus-visible .modulos-card-logo {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="font-sans bg-zinc-950 text-zinc-300 antialiased selection:bg-brand selection:text-zinc-900 relative overflow-x-hidden">
+
+    <div id="top-bar" class="bg-zinc-950 border-b border-zinc-800/80 text-zinc-300 py-2.5 px-4 relative z-50 flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-brand/10 to-transparent pointer-events-none"></div>
+        
+        <a href="#modulos" class="relative z-10 flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 group w-full">
+            
+            <div class="flex items-center flex-wrap justify-center gap-1.5 sm:gap-2">
+                <span class="relative flex h-2 w-2 shrink-0">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-brand"></span>
+                </span>
+                <span class="text-[11px] sm:text-xs md:text-sm font-medium tracking-wide">A Semana do Consumidor começa em</span>
+                
+                <div class="flex items-center gap-1 ml-0.5 md:ml-0">
+                    <span class="bg-zinc-900 text-brand font-black px-1.5 py-0.5 rounded shadow-[0_2px_10px_rgba(254,190,16,0.15)] border border-brand/20 text-[11px] sm:text-xs md:text-sm">0</span>
+                    <span class="bg-zinc-900 text-brand font-black px-1.5 py-0.5 rounded shadow-[0_2px_10px_rgba(254,190,16,0.15)] border border-brand/20 text-[11px] sm:text-xs md:text-sm">5</span>
+                    <span class="text-zinc-500 font-bold text-[9px] sm:text-[10px] md:text-xs uppercase ml-0.5 tracking-wider">Dias</span>
+                </div>
+            </div>
+            
+            <span class="hidden md:inline text-zinc-700 font-light">|</span>
+            
+            <span class="text-white text-[11px] sm:text-xs md:text-sm font-bold flex items-center gap-1 group-hover:text-brand transition-colors mt-0.5 md:mt-0">
+                Entre para o grupo VIP
+                <svg class="w-3.5 h-3.5 text-brand transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"></path></svg>
+            </span>
+            
+        </a>
+    </div>
+
+    <header id="hero" class="relative text-white py-24 md:py-32 px-4 md:px-6 text-center overflow-hidden" style="background-image: linear-gradient(to bottom, rgba(9, 9, 11, 0.7), rgba(9, 9, 11, 0.95), rgba(9, 9, 11, 1)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed;">
+        
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[800px] h-[600px] md:h-[800px] bg-brand/15 blur-[120px] md:blur-[150px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-4xl mx-auto flex flex-col items-center relative z-10">
+            
+            <div class="animate-on-load fade-in-down inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-900/60 border border-zinc-700/50 backdrop-blur-md mb-8 md:mb-10 shadow-2xl">
+                <span class="flex h-2 w-2 rounded-full bg-brand animate-pulse"></span>
+                <span class="text-[10px] md:text-xs font-bold text-zinc-300 tracking-widest uppercase">Acesso Antecipado VIP</span>
+            </div>
+
+            <h1 class="animate-on-load fade-in-up delay-100 text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter leading-[1.1] mb-6 drop-shadow-2xl">
+                A Semana do Consumidor da Educação Física <br class="hidden md:block">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-[#e5ab0e]">está chegando.</span>
+            </h1>
+            
+            <h2 class="animate-on-load fade-in-up delay-200 text-lg md:text-2xl text-zinc-200 font-medium mb-6 drop-shadow-md max-w-3xl leading-relaxed">
+                Mais de <strong class="text-brand">20% de desconto</strong> na sua pós-graduação — mas só para quem estiver dentro do grupo VIP.
+            </h2>
+            
+            <p class="animate-on-load fade-in-up delay-300 text-base md:text-lg text-zinc-400 mb-10 md:mb-12 max-w-2xl font-light leading-relaxed px-4">
+                Cadastre-se agora, entre para o grupo exclusivo no WhatsApp e receba o link de acesso antes do público geral. Vagas estritamente limitadas.
+            </p>
+            
+            <a href="#modulos" class="animate-on-load fade-in-up delay-400 group relative inline-flex items-center justify-center w-full sm:w-auto bg-brand hover:bg-[#e5ab0e] text-zinc-950 font-black text-sm md:text-lg py-5 px-8 md:px-12 rounded-full transition-all duration-300 transform hover:scale-105 shadow-[0_10px_40px_rgba(254,190,16,0.3)] hover:shadow-[0_15px_50px_rgba(254,190,16,0.5)] border border-white/20">
+                <span class="relative z-10 flex items-center">
+                    QUERO ENTRAR NO GRUPO VIP
+                    <svg class="w-5 h-5 md:w-6 md:h-6 ml-3 transition-transform duration-300 group-hover:translate-x-1.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path>
+                    </svg>
+                </span>
+            </a>
+
+        </div>
+    </header>
+
+    <div id="ticker" class="bg-brand text-zinc-950 py-3 overflow-hidden relative shadow-[0_0_20px_rgba(254,190,16,0.5)] z-20">
+        <div class="animate-ticker">
+            <div class="flex whitespace-nowrap px-4">
+                <span class="text-xs md:text-base font-black uppercase tracking-widest mx-4">A SEMANA DO CONSUMIDOR DA EDUCAÇÃO FÍSICA ✦</span>
+                <span class="text-xs md:text-base font-black uppercase tracking-widest mx-4">A SEMANA DO CONSUMIDOR DA EDUCAÇÃO FÍSICA ✦</span>
+                <span class="text-xs md:text-base font-black uppercase tracking-widest mx-4">A SEMANA DO CONSUMIDOR DA EDUCAÇÃO FÍSICA ✦</span>
+                <span class="text-xs md:text-base font-black uppercase tracking-widest mx-4">A SEMANA DO CONSUMIDOR DA EDUCAÇÃO FÍSICA ✦</span>
+            </div>
+            <div class="flex whitespace-nowrap px-4">
+                <span class="text-xs md:text-base font-black uppercase tracking-widest mx-4">A SEMANA DO CONSUMIDOR DA EDUCAÇÃO FÍSICA ✦</span>
+                <span class="text-xs md:text-base font-black uppercase tracking-widest mx-4">A SEMANA DO CONSUMIDOR DA EDUCAÇÃO FÍSICA ✦</span>
+                <span class="text-xs md:text-base font-black uppercase tracking-widest mx-4">A SEMANA DO CONSUMIDOR DA EDUCAÇÃO FÍSICA ✦</span>
+                <span class="text-xs md:text-base font-black uppercase tracking-widest mx-4">A SEMANA DO CONSUMIDOR DA EDUCAÇÃO FÍSICA ✦</span>
+            </div>
+        </div>
+    </div>
+
+    <section id="modulos" class="relative w-full h-auto lg:h-[700px] xl:h-[800px] bg-zinc-950 flex flex-col lg:flex-row overflow-hidden border-y border-zinc-900">
+        
+        <div class="w-full lg:w-[350px] xl:w-[450px] shrink-0 flex flex-col justify-center items-start px-8 md:px-12 py-20 lg:py-0 relative z-20 bg-zinc-950 shadow-[0_20px_50px_rgba(0,0,0,0.8)] lg:shadow-[30px_0_50px_rgba(0,0,0,0.8)] border-r border-zinc-900" data-animate="left">
+            <div class="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[300px] bg-brand/5 blur-[100px] pointer-events-none"></div>
+
+            <span class="inline-block bg-zinc-900/50 backdrop-blur-md border border-zinc-800 text-brand text-[10px] md:text-xs font-bold px-4 md:px-5 py-2 rounded-full uppercase tracking-[0.2em] mb-8 shadow-lg relative z-10">
+                TOP 1 EM AULAS PRÁTICAS
+            </span>
+            
+            <h3 class="text-4xl md:text-5xl xl:text-6xl font-black text-white tracking-tighter leading-[1.1] mb-6 relative z-10 drop-shadow-lg">
+                Nossas <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-[#e5ab0e]">Pós-Graduações</span>
+            </h3>
+            
+            <p class="text-zinc-400 text-base md:text-lg leading-relaxed relative z-10 max-w-[280px] font-light">
+                Escolha a sua especialização e transforme sua carreira com a metodologia de quem domina o mercado prático.
+            </p>
+        </div>
+        
+        <div class="modulos-cards-wrap flex-1 flex flex-col md:flex-row w-full h-[900px] md:h-full">
+            
+            <a href="#" data-open-lead-modal data-product="BM9" class="modulos-card group relative flex-1 cursor-pointer bg-zinc-950 overflow-hidden border-b md:border-b-0 md:border-r border-zinc-900">
+                <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=800&auto=format&fit=crop" class="modulos-card-bg absolute inset-0 w-full h-full object-cover opacity-40 filter grayscale-[50%]" alt="">
+                <div class="modulos-card-overlay absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent opacity-90"></div>
+                
+                <div class="modulos-card-icon absolute top-6 right-6 z-20 w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white/50 shadow-lg pointer-events-none group-hover:bg-blue-600 group-hover:border-blue-600 group-hover:text-white">
+                    <svg class="w-3.5 h-3.5 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"></path></svg>
+                </div>
+
+                <div class="absolute bottom-0 left-0 w-full p-8 md:p-10 flex flex-col justify-end h-full">
+                    <img src="img/logos/logoBio.svg" alt="Logo Biomecânica" class="modulos-card-logo h-8 md:h-10 w-auto max-w-[80%] object-contain object-left opacity-70 mb-4 relative z-10 filter drop-shadow-md">
+                    
+                    <div class="modulos-card-desc opacity-0 max-h-0 overflow-hidden relative z-10">
+                        <p class="text-zinc-200 text-sm md:text-base leading-relaxed drop-shadow-lg font-light max-w-sm border-l-2 border-blue-500 pl-4 ml-1">
+                            A Pós-graduação que Transforma a Forma como Você Pensa o Treino. O título de pós-graduação que você precisa para aplicar a biomecânica de maneira prática, ter maior credibilidade com seus clientes e aumentar o seu faturamento.
+                        </p>
+                        <div class="modulos-card-cta flex items-center text-blue-400 text-xs font-bold uppercase tracking-widest ml-1 mt-4 opacity-0 group-hover:translate-x-1 transition-transform duration-300">
+                            Clique e veja mais
+                            <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="#" data-open-lead-modal data-product="SM7" class="modulos-card group relative flex-1 cursor-pointer bg-zinc-950 overflow-hidden border-b md:border-b-0 md:border-r border-zinc-900">
+                <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=800&auto=format&fit=crop" class="modulos-card-bg absolute inset-0 w-full h-full object-cover opacity-40 filter grayscale-[50%]" alt="">
+                <div class="modulos-card-overlay absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent opacity-90"></div>
+                
+                <div class="modulos-card-icon absolute top-6 right-6 z-20 w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white/50 group-hover:bg-purple-600 group-hover:border-purple-600 group-hover:text-white transition-all duration-500 shadow-lg pointer-events-none">
+                    <svg class="w-3.5 h-3.5 transform group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"></path></svg>
+                </div>
+
+                <div class="absolute bottom-0 left-0 w-full p-8 md:p-10 flex flex-col justify-end h-full">
+                    <img src="img/logos/logoSm.svg" alt="Logo Treinamento Feminino" class="modulos-card-logo h-8 md:h-10 w-auto max-w-[80%] object-contain object-left opacity-70 mb-4 relative z-10 filter drop-shadow-md">
+                    
+                    <div class="modulos-card-desc opacity-0 max-h-0 overflow-hidden relative z-10">
+                        <p class="text-zinc-200 text-sm md:text-base leading-relaxed drop-shadow-lg font-light max-w-sm border-l-2 border-purple-500 pl-4 ml-1">
+                            Pós-graduação em Treinamento Feminino. Seja uma referência no atendimento feminino e tenha mais segurança ao dominar na prática conhecimentos essenciais para a saúde da mulher.
+                        </p>
+                        <div class="modulos-card-cta flex items-center text-purple-400 text-xs font-bold uppercase tracking-widest ml-1 mt-4 opacity-0 group-hover:translate-x-1 transition-transform duration-300">
+                            Clique e veja mais
+                            <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" data-open-lead-modal data-product="MPA" class="modulos-card group relative flex-1 cursor-pointer bg-zinc-950 overflow-hidden border-b md:border-b-0 md:border-r border-zinc-900">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop" class="modulos-card-bg absolute inset-0 w-full h-full object-cover opacity-40 filter grayscale-[50%]" alt="">
+                <div class="modulos-card-overlay absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent opacity-90"></div>
+                
+                <div class="modulos-card-icon absolute top-6 right-6 z-20 w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white/50 group-hover:bg-indigo-600 group-hover:border-indigo-600 group-hover:text-white transition-all duration-500 shadow-lg pointer-events-none">
+                    <svg class="w-3.5 h-3.5 transform group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"></path></svg>
+                </div>
+
+                <div class="absolute bottom-0 left-0 w-full p-8 md:p-10 flex flex-col justify-end h-full">
+                    <img src="img/logos/logoMpa.svg" alt="Logo Musculação Avançada" class="modulos-card-logo h-8 md:h-10 w-auto max-w-[80%] object-contain object-left opacity-70 mb-4 relative z-10 filter drop-shadow-md">
+                    
+                    <div class="modulos-card-desc opacity-0 max-h-0 overflow-hidden relative z-10">
+                        <p class="text-zinc-200 text-sm md:text-base leading-relaxed drop-shadow-lg font-light max-w-sm border-l-2 border-indigo-500 pl-4 ml-1">
+                            Pós-Graduação em Musculação e Periodização Avançada. Desenvolva programas ajustados à realidade de cada aluno aplicando princípios científicos. Aulas ao vivo e gravadas | 18 meses | MEC
+                        </p>
+                        <div class="modulos-card-cta flex items-center text-indigo-400 text-xs font-bold uppercase tracking-widest ml-1 mt-4 opacity-0 group-hover:translate-x-1 transition-transform duration-300">
+                            Clique e veja mais
+                            <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" data-open-lead-modal data-product="FE3" class="modulos-card group relative flex-1 cursor-pointer bg-zinc-950 overflow-hidden border-b md:border-b-0 md:border-r border-zinc-900">
+                <img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?q=80&w=800&auto=format&fit=crop" class="modulos-card-bg absolute inset-0 w-full h-full object-cover opacity-40 filter grayscale-[50%]" alt="">
+                <div class="modulos-card-overlay absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent opacity-90"></div>
+                
+                <div class="modulos-card-icon absolute top-6 right-6 z-20 w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white/50 group-hover:bg-cyan-600 group-hover:border-cyan-600 group-hover:text-white transition-all duration-500 shadow-lg pointer-events-none">
+                    <svg class="w-3.5 h-3.5 transform group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"></path></svg>
+                </div>
+
+                <div class="absolute bottom-0 left-0 w-full p-8 md:p-10 flex flex-col justify-end h-full">
+                    <img src="img/logos/logoFisio.svg" alt="Logo Fisiologia" class="modulos-card-logo h-8 md:h-10 w-auto max-w-[80%] object-contain object-left opacity-70 mb-4 relative z-10 filter drop-shadow-md">
+                    
+                    <div class="modulos-card-desc opacity-0 max-h-0 overflow-hidden relative z-10">
+                        <p class="text-zinc-200 text-sm md:text-base leading-relaxed drop-shadow-lg font-light max-w-sm border-l-2 border-cyan-500 pl-4 ml-1">
+                            Pós-Graduação em fisiologia do exercício, aplicada a grupos especiais. Aprenda como prescrever de forma segura e torne-se o Personal mais disputado do Mercado!
+                        </p>
+                        <div class="modulos-card-cta flex items-center text-cyan-400 text-xs font-bold uppercase tracking-widest ml-1 mt-4 opacity-0 group-hover:translate-x-1 transition-transform duration-300">
+                            Clique e veja mais
+                            <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" data-open-lead-modal data-product="BB4" class="modulos-card group relative flex-1 cursor-pointer bg-zinc-950 overflow-hidden border-b md:border-b-0 md:border-r border-zinc-900">
+                <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=800&auto=format&fit=crop" class="modulos-card-bg absolute inset-0 w-full h-full object-cover opacity-40 filter grayscale-[50%]" alt="">
+                <div class="modulos-card-overlay absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent opacity-90"></div>
+                
+                <div class="modulos-card-icon absolute top-6 right-6 z-20 w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white/50 group-hover:bg-red-600 group-hover:border-red-600 group-hover:text-white transition-all duration-500 shadow-lg pointer-events-none">
+                    <svg class="w-3.5 h-3.5 transform group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"></path></svg>
+                </div>
+
+                <div class="absolute bottom-0 left-0 w-full p-8 md:p-10 flex flex-col justify-end h-full">
+                    <img src="img/logos/logoBb.png" alt="Logo Bodybuilding" class="modulos-card-logo h-8 md:h-10 w-auto max-w-[80%] object-contain object-left opacity-70 mb-4 relative z-10 filter drop-shadow-md">
+                    
+                    <div class="modulos-card-desc opacity-0 max-h-0 overflow-hidden relative z-10">
+                        <p class="text-zinc-200 text-sm md:text-base leading-relaxed drop-shadow-lg font-light max-w-sm border-l-2 border-red-500 pl-4 ml-1">
+                            Bodybuilding e Estética Corporal. Descubra e aplique protocolos avançados de treinamento e gere grandes resultados estéticos no shape de seus alunos.
+                        </p>
+                        <div class="modulos-card-cta flex items-center text-red-400 text-xs font-bold uppercase tracking-widest ml-1 mt-4 opacity-0 group-hover:translate-x-1 transition-transform duration-300">
+                            Clique e veja mais
+                            <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" data-open-lead-modal data-product="TF5" class="modulos-card group relative flex-1 cursor-pointer bg-zinc-950 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800&auto=format&fit=crop" class="modulos-card-bg absolute inset-0 w-full h-full object-cover opacity-40 filter grayscale-[50%]" alt="">
+                <div class="modulos-card-overlay absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent opacity-90"></div>
+                
+                <div class="modulos-card-icon absolute top-6 right-6 z-20 w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white/50 group-hover:bg-brand group-hover:border-brand group-hover:text-zinc-950 transition-all duration-500 shadow-lg pointer-events-none">
+                    <svg class="w-3.5 h-3.5 transform group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"></path></svg>
+                </div>
+
+                <div class="absolute bottom-0 left-0 w-full p-8 md:p-10 flex flex-col justify-end h-full">
+                    <img src="img/logos/logoTf.svg" alt="Logo Treinamento Funcional" class="modulos-card-logo h-8 md:h-10 w-auto max-w-[80%] object-contain object-left opacity-70 mb-4 relative z-10 filter drop-shadow-md">
+                    
+                    <div class="modulos-card-desc opacity-0 max-h-0 overflow-hidden relative z-10">
+                        <p class="text-zinc-200 text-sm md:text-base leading-relaxed drop-shadow-lg font-light max-w-sm border-l-2 border-brand pl-4 ml-1">
+                            Reabilitação de lesões, condicionamento físico e performance. Torne-se um expert e saiba como entregar resultados de hipertrofia e emagrecimento.
+                        </p>
+                        <div class="modulos-card-cta flex items-center text-brand text-xs font-bold uppercase tracking-widest ml-1 mt-4 opacity-0 group-hover:translate-x-1 transition-transform duration-300">
+                            Clique e veja mais
+                            <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <section id="oportunidade" class="py-20 md:py-32 px-4 md:px-6 bg-zinc-950 border-b border-zinc-800/60 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-brand/5 via-zinc-950 to-zinc-950 pointer-events-none"></div>
+
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+                <div data-animate="right">
+                    <span class="inline-flex items-center bg-zinc-900/80 backdrop-blur-sm text-zinc-300 border border-zinc-700 font-bold mb-6 md:mb-8 text-[10px] md:text-xs px-4 md:px-5 py-2 rounded-full uppercase tracking-wide">
+                        <svg class="w-3 h-3 md:w-4 md:h-4 text-brand mr-2 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        A Academy é a nº 1 em aulas práticas.
+                    </span>
+                    <h3 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6 md:mb-8">
+                        A oportunidade que muda sua carreira <br><span class="text-brand">antes de todo mundo.</span>
+                    </h3>
+                    <a href="#modulos" class="hidden lg:inline-flex items-center justify-center bg-white hover:bg-zinc-200 text-zinc-950 font-extrabold text-lg py-4 px-10 rounded-full transition-all duration-300 shadow-[0_0_25px_rgba(255,255,255,0.1)] hover:shadow-[0_0_35px_rgba(255,255,255,0.2)]">
+                        GARANTIR VAGA ANTECIPADA
+                    </a>
+                </div>
+
+                <div class="space-y-4 md:space-y-6" data-animate data-animate-delay="1">
+                    <div class="p-6 md:p-8 bg-zinc-900/40 backdrop-blur-md border border-zinc-800/80 rounded-2xl md:rounded-3xl flex gap-4 md:gap-6 items-start hover:border-brand/40 transition-all duration-300 hover:translate-y-[-2px] hover:shadow-lg">
+                        <div class="text-brand text-3xl md:text-4xl font-black opacity-80 mt-1">01</div>
+                        <div>
+                            <h4 class="text-lg md:text-xl font-bold text-white mb-2 md:mb-3">A Maior Oferta do Ano</h4>
+                            <p class="text-sm md:text-base text-zinc-400 leading-relaxed font-light">Durante poucos dias, vamos liberar uma chance real de você se especializar com quem forma os profissionais mais bem pagos do Brasil.</p>
+                        </div>
+                    </div>
+                    <div class="p-6 md:p-8 bg-zinc-900/40 backdrop-blur-md border border-zinc-800/80 rounded-2xl md:rounded-3xl flex gap-4 md:gap-6 items-start hover:border-brand/40 transition-all duration-300 hover:translate-y-[-2px] hover:shadow-lg">
+                        <div class="text-brand text-3xl md:text-4xl font-black opacity-80 mt-1">02</div>
+                        <div>
+                            <h4 class="text-lg md:text-xl font-bold text-white mb-2 md:mb-3">Acesso VIP Exclusivo</h4>
+                            <p class="text-sm md:text-base text-zinc-400 leading-relaxed font-light">Apenas quem estiver dentro do grupo VIP vai receber o link antecipado da Semana do Consumidor e garantir os bônus antes do público geral.</p>
+                        </div>
+                    </div>
+                    <div class="p-6 md:p-8 bg-zinc-900/40 backdrop-blur-md border border-zinc-800/80 rounded-2xl md:rounded-3xl flex gap-4 md:gap-6 items-start hover:border-brand/40 transition-all duration-300 hover:translate-y-[-2px] hover:shadow-lg">
+                        <div class="text-brand text-3xl md:text-4xl font-black opacity-80 mt-1">03</div>
+                        <div>
+                            <h4 class="text-lg md:text-xl font-bold text-white mb-2 md:mb-3">Vagas Limitadas</h4>
+                            <p class="text-sm md:text-base text-zinc-400 leading-relaxed font-light">Cadastre-se agora. As vagas com condições especiais e os bônus só serão liberados para quem estiver dentro do grupo.</p>
+                        </div>
+                    </div>
+                    <div class="mt-8 text-center lg:hidden">
+                        <a href="#modulos" class="inline-flex items-center justify-center w-full bg-white hover:bg-zinc-200 text-zinc-950 font-extrabold text-sm md:text-lg py-4 px-6 md:px-8 rounded-full transition-all duration-300 shadow-xl">
+                            GARANTIR VAGA ANTECIPADA
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="professores" class="py-20 md:py-32 px-4 md:px-6 bg-zinc-950 relative overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[400px] bg-brand/5 blur-[120px] pointer-events-none"></div>
+
+        <div class="max-w-[1200px] mx-auto text-center relative z-10">
+            <span class="inline-block bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-6 shadow-sm" data-animate>
+                A Elite da Educação Física
+            </span>
+            <h3 class="text-3xl md:text-5xl lg:text-6xl font-black mb-4 md:mb-6 text-white tracking-tight" data-animate data-animate-delay="1">
+                Profissionais <span class="text-brand">Especializados</span>
+            </h3>
+            <p class="text-zinc-400 mb-10 md:mb-16 max-w-2xl mx-auto text-base md:text-xl font-light" data-animate data-animate-delay="2">
+                Aprenda com quem está no "campo de batalha". Nossa equipe de especialistas vai te guiar no caminho do sucesso.
+            </p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 text-left">
+                
+                <div class="group relative rounded-3xl md:rounded-[2rem] overflow-hidden bg-zinc-900 border border-zinc-800 hover:border-brand/60 transition-all duration-500 shadow-2xl aspect-[4/5] cursor-pointer" data-animate data-animate-delay="1">
+                    <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=800&auto=format&fit=crop" alt="André Albuquerque" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000 grayscale group-hover:grayscale-0">
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-transparent transition-opacity duration-500"></div>
+                    
+                    <div class="absolute top-4 right-4 md:top-6 md:right-6 bg-brand text-zinc-950 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest translate-x-10 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 delay-100 shadow-lg">
+                        Mestre
+                    </div>
+
+                    <div class="absolute bottom-0 left-0 w-full p-5 md:p-8 transition-transform duration-500 transform group-hover:-translate-y-2">
+                        <p class="text-blue-400 text-xs md:text-sm font-bold tracking-widest uppercase mb-1 drop-shadow-md">Biomecânica</p>
+                        <h4 class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 leading-tight">André Albuquerque</h4>
+                        
+                        <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500">
+                            <div class="overflow-hidden">
+                                <div class="border-t border-zinc-700/50 pt-3 md:pt-4 mt-2">
+                                    <p class="text-zinc-300 text-xs md:text-sm leading-relaxed mb-3 md:mb-4 font-light">
+                                        Referência nacional em biomecânica aplicada. Aprenda a pensar o treino de forma inteligente e prática.
+                                    </p>
+                                    <a href="#" class="inline-flex items-center text-zinc-400 hover:text-brand transition-colors text-xs md:text-sm font-bold">
+                                        <svg class="w-4 h-4 md:w-5 md:h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                                        @andrealbuquerque
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-3xl md:rounded-[2rem] overflow-hidden bg-zinc-900 border border-zinc-800 hover:border-brand/60 transition-all duration-500 shadow-2xl aspect-[4/5] cursor-pointer" data-animate data-animate-delay="2">
+                    <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=800&auto=format&fit=crop" alt="Rafa Lund" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000 grayscale group-hover:grayscale-0">
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-transparent transition-opacity duration-500"></div>
+                    
+                    <div class="absolute top-4 right-4 md:top-6 md:right-6 bg-brand text-zinc-950 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest translate-x-10 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 delay-100 shadow-lg">
+                        Mestre
+                    </div>
+
+                    <div class="absolute bottom-0 left-0 w-full p-5 md:p-8 transition-transform duration-500 transform group-hover:-translate-y-2">
+                        <p class="text-purple-400 text-xs md:text-sm font-bold tracking-widest uppercase mb-1 drop-shadow-md">T. Feminino</p>
+                        <h4 class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 leading-tight">Rafa Lund</h4>
+                        
+                        <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500">
+                            <div class="overflow-hidden">
+                                <div class="border-t border-zinc-700/50 pt-3 md:pt-4 mt-2">
+                                    <p class="text-zinc-300 text-xs md:text-sm leading-relaxed mb-3 md:mb-4 font-light">
+                                        Especialista em saúde da mulher. Domine na prática os conhecimentos essenciais do atendimento feminino.
+                                    </p>
+                                    <a href="#" class="inline-flex items-center text-zinc-400 hover:text-brand transition-colors text-xs md:text-sm font-bold">
+                                        <svg class="w-4 h-4 md:w-5 md:h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                                        @rafalund
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-3xl md:rounded-[2rem] overflow-hidden bg-zinc-900 border border-zinc-800 hover:border-brand/60 transition-all duration-500 shadow-2xl aspect-[4/5] cursor-pointer" data-animate data-animate-delay="3">
+                    <img src="https://images.unsplash.com/photo-1567598508481-65985588e295?q=80&w=800&auto=format&fit=crop" alt="Belmiro Salles" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000 grayscale group-hover:grayscale-0">
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-transparent transition-opacity duration-500"></div>
+                    
+                    <div class="absolute top-4 right-4 md:top-6 md:right-6 bg-brand text-zinc-950 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest translate-x-10 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 delay-100 shadow-lg">
+                        Doutor
+                    </div>
+
+                    <div class="absolute bottom-0 left-0 w-full p-5 md:p-8 transition-transform duration-500 transform group-hover:-translate-y-2">
+                        <p class="text-indigo-400 text-xs md:text-sm font-bold tracking-widest uppercase mb-1 drop-shadow-md">Musculação</p>
+                        <h4 class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 leading-tight">Belmiro Salles</h4>
+                        
+                        <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500">
+                            <div class="overflow-hidden">
+                                <div class="border-t border-zinc-700/50 pt-3 md:pt-4 mt-2">
+                                    <p class="text-zinc-300 text-xs md:text-sm leading-relaxed mb-3 md:mb-4 font-light">
+                                        Especialista em Periodização Avançada. Desenvolva programas ajustados à realidade aplicando ciência.
+                                    </p>
+                                    <a href="#" class="inline-flex items-center text-zinc-400 hover:text-brand transition-colors text-xs md:text-sm font-bold">
+                                        <svg class="w-4 h-4 md:w-5 md:h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                                        @belmirosalles
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-3xl md:rounded-[2rem] overflow-hidden bg-zinc-900 border border-zinc-800 hover:border-brand/60 transition-all duration-500 shadow-2xl aspect-[4/5] cursor-pointer" data-animate data-animate-delay="2">
+                    <img src="https://images.unsplash.com/photo-1606902965551-dce093cda6e7?q=80&w=800&auto=format&fit=crop" alt="Igor Conterato" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000 grayscale group-hover:grayscale-0">
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-transparent transition-opacity duration-500"></div>
+                    
+                    <div class="absolute top-4 right-4 md:top-6 md:right-6 bg-brand text-zinc-950 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest translate-x-10 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 delay-100 shadow-lg">
+                        Doutor
+                    </div>
+
+                    <div class="absolute bottom-0 left-0 w-full p-5 md:p-8 transition-transform duration-500 transform group-hover:-translate-y-2">
+                        <p class="text-cyan-400 text-xs md:text-sm font-bold tracking-widest uppercase mb-1 drop-shadow-md">Fisiologia</p>
+                        <h4 class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 leading-tight">Igor Conterato</h4>
+                        
+                        <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500">
+                            <div class="overflow-hidden">
+                                <div class="border-t border-zinc-700/50 pt-3 md:pt-4 mt-2">
+                                    <p class="text-zinc-300 text-xs md:text-sm leading-relaxed mb-3 md:mb-4 font-light">
+                                        Especialista em fisiologia do exercício. Prescreva de forma segura e eficaz para grupos especiais.
+                                    </p>
+                                    <a href="#" class="inline-flex items-center text-zinc-400 hover:text-brand transition-colors text-xs md:text-sm font-bold">
+                                        <svg class="w-4 h-4 md:w-5 md:h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                                        @igorconterato
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-3xl md:rounded-[2rem] overflow-hidden bg-zinc-900 border border-zinc-800 hover:border-brand/60 transition-all duration-500 shadow-2xl aspect-[4/5] cursor-pointer" data-animate data-animate-delay="4">
+                    <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=800&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000 grayscale group-hover:grayscale-0">
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-transparent transition-opacity duration-500"></div>
+                    
+                    <div class="absolute top-4 right-4 md:top-6 md:right-6 bg-brand text-zinc-950 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest translate-x-10 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 delay-100 shadow-lg">
+                        Especialista
+                    </div>
+
+                    <div class="absolute bottom-0 left-0 w-full p-5 md:p-8 transition-transform duration-500 transform group-hover:-translate-y-2">
+                        <p class="text-red-400 text-xs md:text-sm font-bold tracking-widest uppercase mb-1 drop-shadow-md">Bodybuilding</p>
+                        <h4 class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 leading-tight">Walter Krause</h4>
+                        
+                        <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500">
+                            <div class="overflow-hidden">
+                                <div class="border-t border-zinc-700/50 pt-3 md:pt-4 mt-2">
+                                    <p class="text-zinc-300 text-xs md:text-sm leading-relaxed mb-3 md:mb-4 font-light">
+                                        Expert em estética corporal. Descubra e aplique protocolos avançados de treinamento.
+                                    </p>
+                                    <a href="#" class="inline-flex items-center text-zinc-400 hover:text-brand transition-colors text-xs md:text-sm font-bold">
+                                        <svg class="w-4 h-4 md:w-5 md:h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                                        @walterkrause
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-3xl md:rounded-[2rem] overflow-hidden bg-zinc-900 border border-zinc-800 hover:border-brand/60 transition-all duration-500 shadow-2xl aspect-[4/5] cursor-pointer" data-animate data-animate-delay="5">
+                    <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800&auto=format&fit=crop" alt="Leandro Ono" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000 grayscale group-hover:grayscale-0">
+                    <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-transparent transition-opacity duration-500"></div>
+                    
+                    <div class="absolute top-4 right-4 md:top-6 md:right-6 bg-brand text-zinc-950 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest translate-x-10 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 delay-100 shadow-lg">
+                        Especialista
+                    </div>
+
+                    <div class="absolute bottom-0 left-0 w-full p-5 md:p-8 transition-transform duration-500 transform group-hover:-translate-y-2">
+                        <p class="text-yellow-500 text-xs md:text-sm font-bold tracking-widest uppercase mb-1 drop-shadow-md">T. Funcional</p>
+                        <h4 class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 leading-tight">Leandro Ono</h4>
+                        
+                        <div class="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500">
+                            <div class="overflow-hidden">
+                                <div class="border-t border-zinc-700/50 pt-3 md:pt-4 mt-2">
+                                    <p class="text-zinc-300 text-xs md:text-sm leading-relaxed mb-3 md:mb-4 font-light">
+                                        Expert em reabilitação e condicionamento físico. Entregue resultados de alta performance aos seus alunos.
+                                    </p>
+                                    <a href="#" class="inline-flex items-center text-zinc-400 hover:text-brand transition-colors text-xs md:text-sm font-bold">
+                                        <svg class="w-4 h-4 md:w-5 md:h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                                        @leandroono
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="mt-12 md:mt-20">
+                <a href="#modulos" class="inline-flex items-center justify-center text-zinc-400 hover:text-brand transition-colors font-medium border-b border-transparent hover:border-brand pb-1 text-sm md:text-lg">
+                    Conheça todo o corpo docente de cada especialização
+                    <svg class="w-4 h-4 md:w-5 md:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="bonus" class="py-20 md:py-32 px-4 md:px-6 bg-zinc-950 relative overflow-hidden border-t border-zinc-900">
+        <div class="absolute top-0 right-0 w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-brand/10 blur-[100px] md:blur-[150px] rounded-full pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-emerald-500/10 blur-[100px] md:blur-[150px] rounded-full pointer-events-none"></div>
+        
+        <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
+
+        <div class="max-w-6xl mx-auto relative z-10">
+            
+            <div class="text-center mb-16 md:mb-24">
+                <span class="inline-flex items-center justify-center bg-brand/10 border border-brand/20 text-brand text-[10px] md:text-xs font-bold px-4 md:px-5 py-2 rounded-full uppercase tracking-[0.2em] mb-4 md:mb-6 shadow-[0_0_20px_rgba(254,190,16,0.2)]" data-animate>
+                    Presentes VIP
+                </span>
+                <h3 class="text-4xl md:text-5xl lg:text-7xl font-black text-white tracking-tight leading-tight" data-animate data-animate-delay="1">
+                    Bônus Exclusivos da <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-[#e5ab0e] drop-shadow-sm">Semana do Consumidor</span>
+                </h3>
+            </div>
+            
+            <div class="space-y-16 md:space-y-24">
+                
+                <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 group" data-animate>
+                    
+                    <div class="w-full lg:w-1/2 relative perspective-1000">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-brand/20 blur-[80px] rounded-full group-hover:bg-brand/30 transition-all duration-700"></div>
+                        
+                        <div class="relative w-full max-w-md mx-auto transform transition-transform duration-700 group-hover:rotate-y-[-10deg] group-hover:rotate-x-[5deg] group-hover:-translate-y-4">
+                            <div class="bg-zinc-800 p-2 md:p-3 rounded-2xl md:rounded-3xl shadow-[20px_20px_50px_rgba(0,0,0,0.7)] border border-zinc-700/50 relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-50 pointer-events-none z-20"></div>
+                                
+                                <img src="https://images.unsplash.com/photo-1587614382346-4ec70e388b28?q=80&w=800&auto=format&fit=crop" alt="Masterclass Mockup" class="w-full h-auto rounded-xl md:rounded-2xl object-cover relative z-10">
+                            </div>
+                            
+                            <div class="absolute -bottom-6 -right-6 md:-right-10 bg-zinc-900 border border-zinc-700 p-4 rounded-xl shadow-xl flex items-center gap-3 transform translate-z-[50px] group-hover:translate-y-2 transition-transform duration-700 z-30">
+                                <div class="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center text-red-500">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-zinc-400 font-bold uppercase">Formato</p>
+                                    <p class="text-white font-black text-sm">Aula Ao Vivo</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center relative z-10 mt-8 lg:mt-0">
+                        <div class="inline-flex items-center gap-3 mb-6">
+                            <span class="text-brand font-black text-xl md:text-2xl">01.</span>
+                            <span class="h-px w-12 bg-zinc-700"></span>
+                            <span class="text-zinc-400 font-bold tracking-widest uppercase text-xs">Bônus Exclusivo</span>
+                        </div>
+                        
+                        <h4 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white leading-[1.1]">
+                            Masterclass Ao Vivo – Como Escalar sua Carreira
+                        </h4>
+                        
+                        <p class="text-zinc-400 mb-8 text-base md:text-lg leading-relaxed font-light">
+                            Aprenda com especialistas como sair da troca de tempo por dinheiro, fidelizar alunos e criar um modelo de negócios altamente escalável dentro da Educação Física.
+                        </p>
+                        
+                        <div class="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800/80 rounded-2xl p-6 w-full max-w-md">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-zinc-500 text-xs font-bold uppercase tracking-widest">Valor Original</span>
+                                <span class="line-through text-zinc-400 text-lg font-bold">R$ 556,00</span>
+                            </div>
+                            <div class="flex items-center justify-between border-t border-zinc-800 pt-4 mt-2">
+                                <span class="text-white text-sm font-bold uppercase tracking-widest">Nesta Oferta</span>
+                                <span class="text-3xl font-black text-brand tracking-tight">GRÁTIS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row-reverse items-center gap-8 lg:gap-16 group pt-8 lg:pt-12 border-t border-zinc-900/50" data-animate data-animate-delay="1">
+                    
+                    <div class="w-full lg:w-1/2 relative perspective-1000">
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-brand/20 blur-[80px] rounded-full group-hover:bg-brand/30 transition-all duration-700"></div>
+                        
+                        <div class="relative w-full max-w-md mx-auto transform transition-transform duration-700 group-hover:rotate-y-[10deg] group-hover:rotate-x-[5deg] group-hover:-translate-y-4">
+                            <div class="relative">
+                                <div class="absolute inset-0 bg-zinc-800 rounded-xl md:rounded-2xl transform translate-x-4 translate-y-4 rotate-3 opacity-40 border border-zinc-700"></div>
+                                <div class="absolute inset-0 bg-zinc-800 rounded-xl md:rounded-2xl transform translate-x-2 translate-y-2 rotate-1 opacity-70 border border-zinc-700"></div>
+                                
+                                <div class="bg-zinc-800 p-1 md:p-2 rounded-xl md:rounded-2xl shadow-[20px_20px_50px_rgba(0,0,0,0.7)] border border-zinc-700/50 relative overflow-hidden z-10">
+                                    <div class="absolute inset-0 bg-gradient-to-tl from-white/10 to-transparent opacity-50 pointer-events-none z-20"></div>
+                                    <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=800&auto=format&fit=crop" alt="eBooks Mockup" class="w-full h-auto rounded-lg md:rounded-xl object-cover relative z-10 aspect-[4/3]">
+                                </div>
+                            </div>
+                            
+                            <div class="absolute -top-6 -left-6 md:-left-10 bg-zinc-900 border border-zinc-700 p-4 rounded-xl shadow-xl flex items-center gap-3 transform translate-z-[50px] group-hover:-translate-y-2 transition-transform duration-700 z-30">
+                                <div class="w-10 h-10 bg-brand/20 rounded-full flex items-center justify-center text-brand">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-zinc-400 font-bold uppercase">Formato</p>
+                                    <p class="text-white font-black text-sm">PDF (5 Livros)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full lg:w-1/2 flex flex-col justify-center relative z-10 mt-8 lg:mt-0">
+                        <div class="inline-flex items-center gap-3 mb-6">
+                            <span class="text-brand font-black text-xl md:text-2xl">02.</span>
+                            <span class="h-px w-12 bg-zinc-700"></span>
+                            <span class="text-zinc-400 font-bold tracking-widest uppercase text-xs">Bônus Exclusivo</span>
+                        </div>
+                        
+                        <h4 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white leading-[1.1]">
+                            Combo Estratégia: Biomecânica + Vendas
+                        </h4>
+                        
+                        <p class="text-zinc-400 mb-8 text-base md:text-lg leading-relaxed font-light">
+                            Leve 5 eBooks completos com os segredos da Biomecânica aplicada à Coluna, Joelho e Ombro, além de um guia prático definitivo de Vendas pelo Instagram.
+                        </p>
+                        
+                        <div class="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800/80 rounded-2xl p-6 w-full max-w-md">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-zinc-500 text-xs font-bold uppercase tracking-widest">Valor Original</span>
+                                <span class="line-through text-zinc-400 text-lg font-bold">R$ 127,00 <span class="text-xs font-normal">/cada</span></span>
+                            </div>
+                            <div class="flex items-center justify-between border-t border-zinc-800 pt-4 mt-2">
+                                <span class="text-white text-sm font-bold uppercase tracking-widest">Nesta Oferta</span>
+                                <span class="text-3xl font-black text-brand tracking-tight">GRÁTIS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-20 md:mt-32 text-center relative z-10">
+                <div class="inline-flex flex-col md:flex-row items-center justify-center gap-3 md:gap-6 bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 border border-zinc-700/50 px-8 py-6 rounded-3xl md:rounded-full shadow-[0_20px_40px_rgba(0,0,0,0.5)] w-full md:w-auto transform hover:scale-[1.02] transition-transform duration-500">
+                    <div class="flex flex-col items-center md:items-end">
+                        <span class="text-zinc-400 text-xs md:text-sm font-bold uppercase tracking-widest mb-1">Comprando separado</span>
+                        <span class="text-red-400 text-lg md:text-xl font-bold line-through">R$ 1.191,00</span>
+                    </div>
+                    
+                    <div class="hidden md:flex flex-col items-center px-4">
+                        <div class="h-8 w-px bg-zinc-700"></div>
+                    </div>
+                    <div class="md:hidden w-16 h-px bg-zinc-700 my-2"></div>
+                    
+                    <div class="flex flex-col items-center md:items-start">
+                        <span class="text-white text-xs md:text-sm font-bold uppercase tracking-widest mb-1">Entrando para o Grupo VIP</span>
+                        <span class="text-brand text-2xl md:text-3xl font-black drop-shadow-sm">R$ 0,00</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="cta-final" class="py-20 md:py-32 px-4 md:px-6 bg-zinc-950 relative overflow-hidden border-t border-zinc-900">
+        <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:20px_20px] md:bg-[size:40px_40px] pointer-events-none"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-brand/10 blur-[100px] md:blur-[150px] rounded-full pointer-events-none"></div>
+        
+        <div class="max-w-5xl mx-auto relative z-10">
+            <div class="bg-gradient-to-b from-zinc-900/80 to-zinc-950/90 backdrop-blur-2xl border border-zinc-800 border-t-brand/40 p-6 md:p-12 lg:p-20 rounded-3xl md:rounded-[3rem] shadow-[0_0_50px_rgba(0,0,0,0.5)] text-center relative overflow-hidden group" data-animate="scale">
+                
+                <div class="absolute -top-16 -right-16 md:-top-32 md:-right-32 w-32 md:w-64 h-32 md:h-64 bg-brand/20 blur-[60px] md:blur-[100px] rounded-full pointer-events-none transition-all duration-700 group-hover:bg-brand/30"></div>
+
+                <div class="flex flex-col items-center mb-8 md:mb-10">
+                    <div class="flex -space-x-3 md:-space-x-4 mb-3 md:mb-4">
+                        <img class="w-10 h-10 md:w-14 md:h-14 rounded-full border-2 md:border-4 border-zinc-900 shadow-md object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Aluno">
+                        <img class="w-10 h-10 md:w-14 md:h-14 rounded-full border-2 md:border-4 border-zinc-900 shadow-md object-cover" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80" alt="Aluno">
+                        <img class="w-10 h-10 md:w-14 md:h-14 rounded-full border-2 md:border-4 border-zinc-900 shadow-md object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="Aluno">
+                        <img class="w-10 h-10 md:w-14 md:h-14 rounded-full border-2 md:border-4 border-zinc-900 shadow-md object-cover" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=100&q=80" alt="Aluno">
+                        <div class="w-10 h-10 md:w-14 md:h-14 rounded-full border-2 md:border-4 border-zinc-900 shadow-md bg-zinc-800 flex items-center justify-center text-[10px] md:text-xs font-black text-brand">+20k</div>
+                    </div>
+                    <p class="text-brand font-bold uppercase tracking-widest md:tracking-[0.2em] text-[10px] md:text-sm flex items-center">
+                        <svg class="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                        Junte-se à Elite da Educação Física
+                    </p>
+                </div>
+
+                <h2 class="text-4xl md:text-5xl lg:text-7xl font-black mb-6 md:mb-8 text-white tracking-tight leading-[1.1]">
+                    Não espere <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-[#e5ab0e]">o dia 20 chegar.</span>
+                </h2>
+                
+                <p class="text-base md:text-xl font-light mb-8 md:mb-12 text-zinc-300 leading-relaxed max-w-2xl mx-auto px-2">
+                    A verdadeira Semana do Consumidor acontece de 16 a 20 de março — e as condições especiais <strong class="text-white font-bold border-b border-brand/50 pb-0.5">só estão disponíveis para quem estiver no grupo VIP.</strong> Cadastre-se e garanta seu acesso.
+                </p>
+                
+                <div class="relative inline-block w-full md:w-auto mb-8 md:mb-12">
+                    <div class="absolute inset-0 bg-brand rounded-full blur-xl opacity-30 animate-pulse"></div>
+                    <a href="#modulos" class="relative inline-flex items-center justify-center w-full md:w-auto bg-brand hover:bg-[#e5ab0e] text-zinc-950 font-black text-lg md:text-2xl py-5 px-6 md:py-6 md:px-12 rounded-full transition-all duration-300 transform hover:scale-105 shadow-[0_10px_40px_rgba(254,190,16,0.4)] border border-white/20">
+                        <svg class="w-6 h-6 md:w-8 md:h-8 mr-2 md:mr-3 text-zinc-950" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"></path>
+                        </svg>
+                        QUERO ENTRAR NO GRUPO VIP
+                    </a>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4 text-xs md:text-sm font-medium">
+                    <div class="flex items-center bg-zinc-950 text-zinc-300 px-4 md:px-5 py-2.5 rounded-full border border-zinc-800 w-fit">
+                        <svg class="w-4 h-4 md:w-5 md:h-5 mr-2 text-brand shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg> 
+                        Vagas Limitadas
+                    </div>
+                    <div class="flex items-center bg-zinc-950 text-zinc-300 px-4 md:px-5 py-2.5 rounded-full border border-zinc-800 w-fit">
+                        <span class="relative flex h-2.5 w-2.5 md:h-3 md:w-3 mr-2 md:mr-3 shrink-0">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2.5 w-2.5 md:h-3 md:w-3 bg-emerald-500"></span>
+                        </span>
+                        Grupo VIP Ativo
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-16 md:py-24 px-4 md:px-6 bg-zinc-950">
+        <div class="max-w-3xl mx-auto">
+            <h3 class="text-3xl md:text-4xl font-extrabold mb-8 md:mb-12 text-center text-white" data-animate>Dúvidas Frequentes</h3>
+            <div class="space-y-3 md:space-y-4">
+                <details class="group bg-zinc-900 p-5 md:p-6 rounded-2xl cursor-pointer border border-zinc-800 hover:border-zinc-700 transition-all duration-300">
+                    <summary class="font-bold text-white flex justify-between items-center text-base md:text-lg">
+                        Como funciona o Grupo VIP?
+                        <span class="transition-transform group-open:rotate-180 text-brand text-xl md:text-2xl shrink-0 ml-4">+</span>
+                    </summary>
+                    <p class="text-zinc-400 mt-4 text-sm md:text-base leading-relaxed pl-3 md:pl-4 border-l-2 border-brand">Você receberá o link exclusivo da oferta no WhatsApp antes de todo o público geral, garantindo sua vaga e os bônus que são limitados.</p>
+                </details>
+                <details class="group bg-zinc-900 p-5 md:p-6 rounded-2xl cursor-pointer border border-zinc-800 hover:border-zinc-700 transition-all duration-300">
+                    <summary class="font-bold text-white flex justify-between items-center text-base md:text-lg">
+                        A pós-graduação é reconhecida pelo MEC?
+                        <span class="transition-transform group-open:rotate-180 text-brand text-xl md:text-2xl shrink-0 ml-4">+</span>
+                    </summary>
+                    <p class="text-zinc-400 mt-4 text-sm md:text-base leading-relaxed pl-3 md:pl-4 border-l-2 border-brand">Sim! Todos os nossos cursos de pós-graduação são devidamente autorizados e certificados pelo MEC, válidos em todo o território nacional.</p>
+                </details>
+                <details class="group bg-zinc-900 p-5 md:p-6 rounded-2xl cursor-pointer border border-zinc-800 hover:border-zinc-700 transition-all duration-300">
+                    <summary class="font-bold text-white flex justify-between items-center text-base md:text-lg">
+                        As aulas são 100% online?
+                        <span class="transition-transform group-open:rotate-180 text-brand text-xl md:text-2xl shrink-0 ml-4">+</span>
+                    </summary>
+                    <p class="text-zinc-400 mt-4 text-sm md:text-base leading-relaxed pl-3 md:pl-4 border-l-2 border-brand">Sim. Você estuda de onde e quando quiser, com acesso a uma plataforma moderna, aulas práticas gravadas em alta resolução e materiais em PDF.</p>
+                </details>
+                <details class="group bg-zinc-900 p-5 md:p-6 rounded-2xl cursor-pointer border border-zinc-800 hover:border-zinc-700 transition-all duration-300">
+                    <summary class="font-bold text-white flex justify-between items-center text-base md:text-lg">
+                        Por quanto tempo terei acesso ao curso?
+                        <span class="transition-transform group-open:rotate-180 text-brand text-xl md:text-2xl shrink-0 ml-4">+</span>
+                    </summary>
+                    <p class="text-zinc-400 mt-4 text-sm md:text-base leading-relaxed pl-3 md:pl-4 border-l-2 border-brand">Você terá acesso estendido de 18 meses a toda a plataforma, incluindo atualizações das aulas e os bônus conquistados na Semana do Consumidor.</p>
+                </details>
+                <details class="group bg-zinc-900 p-5 md:p-6 rounded-2xl cursor-pointer border border-zinc-800 hover:border-zinc-700 transition-all duration-300">
+                    <summary class="font-bold text-white flex justify-between items-center text-base md:text-lg">
+                        Quais são as formas de pagamento?
+                        <span class="transition-transform group-open:rotate-180 text-brand text-xl md:text-2xl shrink-0 ml-4">+</span>
+                    </summary>
+                    <p class="text-zinc-400 mt-4 text-sm md:text-base leading-relaxed pl-3 md:pl-4 border-l-2 border-brand">Você poderá pagar via PIX, Boleto Bancário ou Cartão de Crédito em até 12x. Os detalhes exclusivos de desconto serão liberados apenas no grupo VIP.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <footer id="rodape" class="bg-black text-zinc-400 py-12 md:py-16 px-4 md:px-6 border-t border-zinc-900 relative">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 mb-10 md:mb-12 border-b border-zinc-800/50 pb-10 md:pb-12 text-center md:text-left">
+                <div class="space-y-4">
+                    <h4 class="text-xl md:text-2xl font-black text-white tracking-tighter uppercase"><span class="text-brand">Personal</span><br>Trainer Academy</h4>
+                    <p class="text-xs md:text-sm text-zinc-500 leading-relaxed mt-2 md:mt-4 max-w-xs mx-auto md:mx-0">A instituição número 1 do Brasil em aulas práticas para profissionais de Educação Física que buscam o topo do mercado.</p>
+                </div>
+                <div>
+                    <h5 class="text-white font-bold mb-4 md:mb-6 uppercase tracking-wider text-xs md:text-sm">Links Rápidos</h5>
+                    <ul class="space-y-2 md:space-y-3 text-xs md:text-sm font-medium">
+                        <li><a href="#modulos" class="hover:text-brand transition-all duration-300">Nossos Módulos</a></li>
+                        <li><a href="#oportunidade" class="hover:text-brand transition-all duration-300">A Oportunidade</a></li>
+                        <li><a href="#professores" class="hover:text-brand transition-all duration-300">Professores</a></li>
+                        <li><a href="#bonus" class="hover:text-brand transition-all duration-300">Bônus Exclusivos</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-bold mb-4 md:mb-6 uppercase tracking-wider text-xs md:text-sm">Contato e Suporte</h5>
+                    <ul class="space-y-2 md:space-y-3 text-xs md:text-sm font-medium flex flex-col items-center md:items-start">
+                        <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-brand shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> contato@ptacademy.com.br</li>
+                        <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-brand shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg> (11) 99999-9999</li>
+                        <li class="flex items-center mt-1 md:mt-2 text-emerald-500"><svg class="w-4 h-4 mr-2 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg> Ambiente 100% Seguro</li>
+                    </ul>
+                </div>
+                <div class="flex flex-col items-center md:items-start">
+                    <h5 class="text-white font-bold mb-4 md:mb-6 uppercase tracking-wider text-xs md:text-sm">Siga a Academy</h5>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-brand hover:text-zinc-950 transition-colors duration-300">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-brand hover:text-zinc-950 transition-colors duration-300">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center text-[10px] md:text-xs text-zinc-600 space-y-4 md:space-y-0 text-center md:text-left">
+                <div>
+                    <p>PT Academy Educacional LTDA - CNPJ: 00.000.000/0001-00</p>
+                    <p class="mt-1">© 2026 Todos os direitos reservados.</p>
+                </div>
+                <div class="flex space-x-4 md:space-x-6">
+                    <a href="#" class="hover:text-white transition-all duration-300">Termos de Uso</a>
+                    <a href="#" class="hover:text-white transition-all duration-300">Política de Privacidade</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="lead-modal-BM9" class="lead-modal-pós fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm" aria-hidden="true">
+        <div class="relative rounded-2xl shadow-2xl max-w-md w-full p-8 animate-[fadeIn_0.3s_ease-out] bg-[#12121a] border border-[#1E64F0]/30">
+            <button type="button" data-modal-close class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-[#1E64F0]/20 flex items-center justify-center text-gray-400 hover:text-white transition" aria-label="Fechar"><i class="fas fa-times"></i></button>
+            <h3 class="text-2xl font-bold text-white mb-1">Preencha seus dados</h3>
+            <p class="text-sm text-gray-400 mb-6">Para liberar seu link com a condition especial.</p>
+            <form id="form_BM9" class="space-y-4" data-product="BM9">
+                <input type="hidden" name="utm_source" class="lead-utm" data-utm="utm_source" value="">
+                <input type="hidden" name="utm_term" class="lead-utm" data-utm="utm_term" value="">
+                <input type="hidden" name="utm_campaign" class="lead-utm" data-utm="utm_campaign" value="">
+                <input type="hidden" name="utm_medium" class="lead-utm" data-utm="utm_medium" value="">
+                <input type="hidden" name="utm_content" class="lead-utm" data-utm="utm_content" value="">
+                <input type="hidden" name="url" class="lead-utm" data-utm="url" value="">
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Nome</label><input type="text" name="nome" required placeholder="Seu nome completo" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-white/10 text-white placeholder-gray-500 focus:border-[#1E64F0] focus:ring-1 focus:ring-[#1E64F0] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Email</label><input type="email" name="email" required placeholder="seu@email.com" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-white/10 text-white placeholder-gray-500 focus:border-[#1E64F0] focus:ring-1 focus:ring-[#1E64F0] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Telefone</label><div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-[#1E64F0] focus-within:ring-1 focus-within:ring-[#1E64F0] bg-[#0a0a0f]"><span class="inline-flex items-center px-4 py-3 bg-[#1E64F0] text-white font-semibold select-none shrink-0">+55</span><input type="tel" name="telefone" required placeholder="11 99999-9999" inputmode="numeric" pattern="[0-9\s]*" maxlength="15" class="lead-input lead-phone flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-500 outline-none min-w-0"></div><p class="text-gray-400 text-xs mt-1">DDD + número (apenas números)</p><p class="lead-phone-err text-red-400 text-xs mt-1 hidden">Informe o DDD e o número (apenas números).</p></div>
+                <button type="submit" class="w-full bg-[#1E64F0] text-white font-bold py-4 rounded-xl uppercase tracking-widest hover:shadow-[0_0_20px_rgba(30,100,240,0.6)] transition mt-2">Avançar para o Grupo</button>
+            </form>
+        </div>
+    </div>
+    <div id="lead-modal-SM7" class="lead-modal-pós fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm" aria-hidden="true">
+        <div class="relative rounded-2xl shadow-2xl max-w-md w-full p-8 animate-[fadeIn_0.3s_ease-out] bg-[#120a17] border border-[#D946EF]/30">
+            <button type="button" data-modal-close class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-[#D946EF]/20 flex items-center justify-center text-gray-400 hover:text-white transition" aria-label="Fechar"><i class="fas fa-times"></i></button>
+            <h3 class="text-2xl font-bold text-white mb-1">Preencha seus dados</h3>
+            <p class="text-sm text-gray-400 mb-6">Para liberar seu link com a condition especial.</p>
+            <form id="form_SM7" class="space-y-4" data-product="SM7">
+                <input type="hidden" name="utm_source" class="lead-utm" data-utm="utm_source" value="">
+                <input type="hidden" name="utm_term" class="lead-utm" data-utm="utm_term" value="">
+                <input type="hidden" name="utm_campaign" class="lead-utm" data-utm="utm_campaign" value="">
+                <input type="hidden" name="utm_medium" class="lead-utm" data-utm="utm_medium" value="">
+                <input type="hidden" name="utm_content" class="lead-utm" data-utm="utm_content" value="">
+                <input type="hidden" name="url" class="lead-utm" data-utm="url" value="">
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Nome</label><input type="text" name="nome" required placeholder="Seu nome completo" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a050d] border border-white/10 text-white placeholder-gray-500 focus:border-[#D946EF] focus:ring-1 focus:ring-[#D946EF] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Email</label><input type="email" name="email" required placeholder="seu@email.com" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a050d] border border-white/10 text-white placeholder-gray-500 focus:border-[#D946EF] focus:ring-1 focus:ring-[#D946EF] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Telefone</label><div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-[#D946EF] focus-within:ring-1 focus-within:ring-[#D946EF] bg-[#0a050d]"><span class="inline-flex items-center px-4 py-3 bg-[#D946EF] text-white font-bold select-none shrink-0">+55</span><input type="tel" name="telefone" required placeholder="11 99999-9999" inputmode="numeric" pattern="[0-9\s]*" maxlength="15" class="lead-input lead-phone flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-500 outline-none min-w-0"></div><p class="text-gray-400 text-xs mt-1">DDD + número (apenas números)</p><p class="lead-phone-err text-red-400 text-xs mt-1 hidden">Informe o DDD e o número.</p></div>
+                <button type="submit" class="w-full bg-[#D946EF] text-white font-bold py-4 rounded-xl uppercase tracking-widest hover:shadow-[0_0_20px_rgba(217,70,239,0.4)] transition mt-2">Avançar para o Grupo</button>
+            </form>
+        </div>
+    </div>
+    <div id="lead-modal-MPA" class="lead-modal-pós fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm" aria-hidden="true">
+        <div class="relative rounded-2xl shadow-2xl max-w-md w-full p-8 animate-[fadeIn_0.3s_ease-out] bg-[#0c0e14] border border-[#5E7FAA]/30">
+            <button type="button" data-modal-close class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-[#5E7FAA]/20 flex items-center justify-center text-gray-400 hover:text-white transition" aria-label="Fechar"><i class="fas fa-times"></i></button>
+            <h3 class="text-2xl font-bold text-white mb-1">Preencha seus dados</h3>
+            <p class="text-sm text-gray-400 mb-6">Para liberar seu link com a condition especial.</p>
+            <form id="form_MPA" class="space-y-4" data-product="MPA">
+                <input type="hidden" name="utm_source" class="lead-utm" data-utm="utm_source" value="">
+                <input type="hidden" name="utm_term" class="lead-utm" data-utm="utm_term" value="">
+                <input type="hidden" name="utm_campaign" class="lead-utm" data-utm="utm_campaign" value="">
+                <input type="hidden" name="utm_medium" class="lead-utm" data-utm="utm_medium" value="">
+                <input type="hidden" name="utm_content" class="lead-utm" data-utm="utm_content" value="">
+                <input type="hidden" name="url" class="lead-utm" data-utm="url" value="">
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Nome</label><input type="text" name="nome" required placeholder="Seu nome completo" class="lead-input w-full px-4 py-3 rounded-lg bg-[#050608] border border-white/10 text-white placeholder-gray-500 focus:border-[#5E7FAA] focus:ring-1 focus:ring-[#5E7FAA] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Email</label><input type="email" name="email" required placeholder="seu@email.com" class="lead-input w-full px-4 py-3 rounded-lg bg-[#050608] border border-white/10 text-white placeholder-gray-500 focus:border-[#5E7FAA] focus:ring-1 focus:ring-[#5E7FAA] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Telefone</label><div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-[#5E7FAA] focus-within:ring-1 focus-within:ring-[#5E7FAA] bg-[#050608]"><span class="inline-flex items-center px-4 py-3 bg-[#5E7FAA] text-white font-semibold select-none shrink-0">+55</span><input type="tel" name="telefone" required placeholder="11 99999-9999" inputmode="numeric" pattern="[0-9\s]*" maxlength="15" class="lead-input lead-phone flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-500 outline-none min-w-0"></div><p class="text-gray-400 text-xs mt-1">DDD + número (apenas números)</p><p class="lead-phone-err text-red-400 text-xs mt-1 hidden">Informe o DDD e o número (apenas números).</p></div>
+                <button type="submit" class="w-full bg-[#5E7FAA] text-white font-bold py-4 rounded-xl uppercase tracking-widest hover:shadow-[0_0_20px_rgba(94,127,170,0.6)] transition mt-2">Avançar para o Grupo</button>
+            </form>
+        </div>
+    </div>
+    <div id="lead-modal-FE3" class="lead-modal-pós fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm" aria-hidden="true">
+        <div class="relative rounded-2xl shadow-2xl max-w-md w-full p-8 animate-[fadeIn_0.3s_ease-out] bg-[#12121a] border border-[#00C2FF]/30">
+            <button type="button" data-modal-close class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-[#00C2FF]/20 flex items-center justify-center text-gray-400 hover:text-white transition" aria-label="Fechar"><i class="fas fa-times"></i></button>
+            <h3 class="text-2xl font-bold text-white mb-1">Preencha seus dados</h3>
+            <p class="text-sm text-gray-400 mb-6">Para liberar seu link com a condition especial.</p>
+            <form id="form_FE3" class="space-y-4" data-product="FE3">
+                <input type="hidden" name="utm_source" class="lead-utm" data-utm="utm_source" value="">
+                <input type="hidden" name="utm_term" class="lead-utm" data-utm="utm_term" value="">
+                <input type="hidden" name="utm_campaign" class="lead-utm" data-utm="utm_campaign" value="">
+                <input type="hidden" name="utm_medium" class="lead-utm" data-utm="utm_medium" value="">
+                <input type="hidden" name="utm_content" class="lead-utm" data-utm="utm_content" value="">
+                <input type="hidden" name="url" class="lead-utm" data-utm="url" value="">
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Nome</label><input type="text" name="nome" required placeholder="Seu nome completo" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-white/10 text-white placeholder-gray-500 focus:border-[#00C2FF] focus:ring-1 focus:ring-[#00C2FF] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Email</label><input type="email" name="email" required placeholder="seu@email.com" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-white/10 text-white placeholder-gray-500 focus:border-[#00C2FF] focus:ring-1 focus:ring-[#00C2FF] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Telefone</label><div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-[#00C2FF] focus-within:ring-1 focus-within:ring-[#00C2FF] bg-[#0a0a0f]"><span class="inline-flex items-center px-4 py-3 bg-[#00C2FF] text-[#050505] font-bold select-none shrink-0">+55</span><input type="tel" name="telefone" required placeholder="11 99999-9999" maxlength="15" inputmode="numeric" class="lead-input lead-phone flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-500 outline-none min-w-0"></div><p class="text-gray-400 text-xs mt-1">DDD + número (apenas números)</p><p class="lead-phone-err text-red-400 text-xs mt-1 hidden">Informe o DDD e o número (apenas números).</p></div>
+                <button type="submit" class="w-full bg-[#00C2FF] text-[#050505] font-bold py-4 rounded-xl uppercase tracking-widest hover:shadow-[0_0_20px_rgba(0,194,255,0.6)] transition mt-2">Avançar para o Grupo</button>
+            </form>
+        </div>
+    </div>
+    <div id="lead-modal-BB4" class="lead-modal-pós fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm" aria-hidden="true">
+        <div class="relative rounded-2xl shadow-2xl max-w-md w-full p-8 animate-[fadeIn_0.3s_ease-out] bg-[#120a0a] border border-[#DC2626]/30">
+            <button type="button" data-modal-close class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-[#DC2626]/20 flex items-center justify-center text-gray-400 hover:text-white transition" aria-label="Fechar"><i class="fas fa-times"></i></button>
+            <h3 class="text-2xl font-bold text-white mb-1">Preencha seus dados</h3>
+            <p class="text-sm text-gray-400 mb-6">Para liberar seu link com a condition especial.</p>
+            <form id="form_BB4" class="space-y-4" data-product="BB4">
+                <input type="hidden" name="utm_source" class="lead-utm" data-utm="utm_source" value="">
+                <input type="hidden" name="utm_term" class="lead-utm" data-utm="utm_term" value="">
+                <input type="hidden" name="utm_campaign" class="lead-utm" data-utm="utm_campaign" value="">
+                <input type="hidden" name="utm_medium" class="lead-utm" data-utm="utm_medium" value="">
+                <input type="hidden" name="utm_content" class="lead-utm" data-utm="utm_content" value="">
+                <input type="hidden" name="url" class="lead-utm" data-utm="url" value="">
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Nome</label><input type="text" name="nome" required placeholder="Seu nome completo" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0505] border border-white/10 text-white placeholder-gray-500 focus:border-[#DC2626] focus:ring-1 focus:ring-[#DC2626] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Email</label><input type="email" name="email" required placeholder="seu@email.com" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0505] border border-white/10 text-white placeholder-gray-500 focus:border-[#DC2626] focus:ring-1 focus:ring-[#DC2626] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Telefone</label><div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-[#DC2626] focus-within:ring-1 focus-within:ring-[#DC2626] bg-[#0a0505]"><span class="inline-flex items-center px-4 py-3 bg-[#DC2626] text-white font-bold select-none shrink-0">+55</span><input type="tel" name="telefone" required placeholder="11 99999-9999" maxlength="15" inputmode="numeric" pattern="[0-9\s]*" class="lead-input lead-phone flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-500 outline-none min-w-0"></div><p class="text-gray-400 text-xs mt-1">DDD + número (apenas números)</p><p class="lead-phone-err text-red-400 text-xs mt-1 hidden">Informe o DDD e o número.</p></div>
+                <button type="submit" class="w-full bg-[#DC2626] text-white font-bold py-4 rounded-xl uppercase tracking-widest hover:shadow-[0_0_20px_rgba(220,38,38,0.6)] transition mt-2">Avançar para o Grupo</button>
+            </form>
+        </div>
+    </div>
+    <div id="lead-modal-TF5" class="lead-modal-pós fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm" aria-hidden="true">
+        <div class="relative rounded-2xl shadow-2xl max-w-md w-full p-8 animate-[fadeIn_0.3s_ease-out] bg-[#12100a] border border-[#FFB800]/30">
+            <button type="button" data-modal-close class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-[#FFB800]/20 flex items-center justify-center text-gray-400 hover:text-white transition" aria-label="Fechar"><i class="fas fa-times"></i></button>
+            <h3 class="text-2xl font-bold text-white mb-1">Preencha seus dados</h3>
+            <p class="text-sm text-gray-400 mb-6">Para liberar seu link com a condition especial.</p>
+            <form id="form_TF5" class="space-y-4" data-product="TF5">
+                <input type="hidden" name="utm_source" class="lead-utm" data-utm="utm_source" value="">
+                <input type="hidden" name="utm_term" class="lead-utm" data-utm="utm_term" value="">
+                <input type="hidden" name="utm_campaign" class="lead-utm" data-utm="utm_campaign" value="">
+                <input type="hidden" name="utm_medium" class="lead-utm" data-utm="utm_medium" value="">
+                <input type="hidden" name="utm_content" class="lead-utm" data-utm="utm_content" value="">
+                <input type="hidden" name="url" class="lead-utm" data-utm="url" value="">
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Nome</label><input type="text" name="nome" required placeholder="Seu nome completo" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0905] border border-white/10 text-white placeholder-gray-500 focus:border-[#FFB800] focus:ring-1 focus:ring-[#FFB800] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Email</label><input type="email" name="email" required placeholder="seu@email.com" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0905] border border-white/10 text-white placeholder-gray-500 focus:border-[#FFB800] focus:ring-1 focus:ring-[#FFB800] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1">Telefone</label><div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-[#FFB800] focus-within:ring-1 focus-within:ring-[#FFB800] bg-[#0a0905]"><span class="inline-flex items-center px-4 py-3 bg-[#FFB800] text-black font-bold select-none shrink-0">+55</span><input type="tel" name="telefone" required placeholder="(11) 99999-9999" inputmode="numeric" maxlength="15" class="lead-input lead-phone flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-500 outline-none min-w-0"></div><p class="text-gray-400 text-xs mt-1">DDD + número (apenas números)</p><p class="lead-phone-err text-red-400 text-xs mt-1 hidden">Informe o DDD e o número.</p></div>
+                <button type="submit" class="w-full bg-[#FFB800] text-black font-bold py-4 rounded-xl uppercase tracking-widest hover:shadow-[0_0_20px_rgba(255,184,0,0.4)] transition mt-2">Avançar para o Grupo</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="cookie-lgpd-banner" class="fixed bottom-0 left-0 right-0 z-[90] hidden px-4 py-4 md:px-6 md:py-5 bg-zinc-900 border-t border-zinc-700 shadow-[0_-4px_24px_rgba(0,0,0,0.4)]" role="dialog" aria-label="Aviso de cookies e privacidade">
+        <div class="container mx-auto max-w-5xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <p class="text-zinc-300 text-sm leading-relaxed flex-1">
+                Utilizamos cookies e dados pessoais de acordo com a <strong class="text-white">Lei Geral de Proteção de Dados (LGPD)</strong> para melhorar sua experiência, analisar o uso do site e personalizar conteúdo. Ao continuar navegando, você concorda com nossa <a href="#" class="text-brand hover:underline font-medium">Política de Privacidade</a> e o uso de cookies.
+            </p>
+            <button type="button" id="cookie-lgpd-accept" class="shrink-0 bg-brand text-zinc-950 font-bold text-sm uppercase tracking-wider py-3 px-6 rounded-lg hover:opacity-90 transition whitespace-nowrap">
+                Aceitar
+            </button>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            // Configuração de cada pós (redirect + webhook)
+            var PRODUCT_CONFIG = {
+                BB4: { redirect: 'https://chk.eduzz.com/KW8KD4NB01', webhook: 'https://hook.us1.make.com/bhigavwc6bfhskmnicov25r6jv9fnt1p?produto=BB4' },
+                BM9: { redirect: 'https://chk.eduzz.com/60EEGRPB03', webhook: 'https://hook.us1.make.com/t5rdmgsbkvyqy5xisoobb4scyskaa5lt?produto=BM9' },
+                SM7: { redirect: 'https://chk.eduzz.com/8WPAQPDQWP', webhook: 'https://hook.us1.make.com/t5rdmgsbkvyqy5xisoobb4scyskaa5lt?produto=SM7' },
+                MPA: { redirect: 'https://chk.eduzz.com/39YDPQX49O', webhook: 'https://hook.us1.make.com/bhigavwc6bfhskmnicov25r6jv9fnt1p?produto=MPA' },
+                FE3: { redirect: 'https://pos.personaltraineracademy.com.br/obg-obrigado-fisio/', webhook: 'https://hook.us1.make.com/t5rdmgsbkvyqy5xisoobb4scyskaa5lt?produto=FE3' },
+                TF5: { redirect: 'https://chk.eduzz.com/6W4821RA0Z', webhook: 'https://hook.us1.make.com/bhigavwc6bfhskmnicov25r6jv9fnt1p?produto=TF5' }
+            };
+            var UTM_STORAGE_KEY = 'lead_utm_params';
+            
+            function getQueryParam(name) {
+                var match = new RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+                return match ? decodeURIComponent(match[1].replace(/\+/g, ' ')) : '';
+            }
+            
+            function getStoredUtms() {
+                try { var raw = sessionStorage.getItem(UTM_STORAGE_KEY); return raw ? JSON.parse(raw) : {}; } catch (e) { return {}; }
+            }
+            
+            function setStoredUtms(obj) {
+                try { sessionStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(obj)); } catch (e) {}
+            }
+            
+            function fillUtmAndUrl(form) {
+                if (!form) return;
+                var fromQuery = { utm_source: getQueryParam('utm_source'), utm_term: getQueryParam('utm_term'), utm_campaign: getQueryParam('utm_campaign'), utm_medium: getQueryParam('utm_medium'), utm_content: getQueryParam('utm_content') };
+                var hasAnyUtm = Object.keys(fromQuery).some(function (k) { return fromQuery[k]; });
+                var stored = getStoredUtms();
+                
+                if (hasAnyUtm) {
+                    stored.utm_source = fromQuery.utm_source || stored.utm_source || '';
+                    stored.utm_term = fromQuery.utm_term || stored.utm_term || '';
+                    stored.utm_campaign = fromQuery.utm_campaign || stored.utm_campaign || '';
+                    stored.utm_medium = fromQuery.utm_medium || stored.utm_medium || '';
+                    stored.utm_content = fromQuery.utm_content || stored.utm_content || '';
+                    stored.url = window.location.href || stored.url || '';
+                    setStoredUtms(stored);
+                }
+                
+                var map = { utm_source: fromQuery.utm_source || stored.utm_source || '', utm_term: fromQuery.utm_term || stored.utm_term || '', utm_campaign: fromQuery.utm_campaign || stored.utm_campaign || '', utm_medium: fromQuery.utm_medium || stored.utm_medium || '', utm_content: fromQuery.utm_content || stored.utm_content || '', url: window.location.href || stored.url || '' };
+                
+                form.querySelectorAll('.lead-utm').forEach(function (el) { 
+                    var k = el.getAttribute('data-utm'); 
+                    if (map[k] !== undefined) el.value = map[k]; 
+                });
+            }
+            
+            function getVisibleModal() {
+                var modals = document.querySelectorAll('.lead-modal-pós');
+                for (var i = 0; i < modals.length; i++) { 
+                    if (modals[i].getAttribute('aria-hidden') === 'false') return modals[i]; 
+                }
+                return null;
+            }
+            
+            function openModal(product) {
+                if (!product || !PRODUCT_CONFIG[product]) return; // Somente abre se houver produto válido clicado
+                
+                document.querySelectorAll('.lead-modal-pós').forEach(function (m) { 
+                    m.setAttribute('aria-hidden', 'true'); 
+                    m.classList.add('hidden'); 
+                    m.classList.remove('flex'); 
+                });
+                
+                var modal = document.getElementById('lead-modal-' + product);
+                if (!modal) return;
+                
+                var form = modal.querySelector('form');
+                fillUtmAndUrl(form);
+                
+                var preName = getQueryParam('name'), preEmail = getQueryParam('email'), prePhone = getQueryParam('phone');
+                if (preName && form.querySelector('input[name="nome"]')) form.querySelector('input[name="nome"]').value = preName;
+                if (preEmail && form.querySelector('input[name="email"]')) form.querySelector('input[name="email"]').value = preEmail;
+                if (prePhone && form.querySelector('input[name="telefone"]')) {
+                    var digits = prePhone.replace(/\D/g, '');
+                    var ph = form.querySelector('input[name="telefone"]');
+                    ph.value = digits.length <= 2 ? prePhone : digits.slice(0, 2) + ' ' + digits.slice(2, 7) + (digits.length > 7 ? '-' + digits.slice(7, 11) : '');
+                }
+                
+                modal.setAttribute('aria-hidden', 'false');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden'; // Evita rolagem da página por baixo do modal
+            }
+            
+            function closeModal(modalEl) {
+                var modal = modalEl || getVisibleModal();
+                if (!modal) return;
+                modal.setAttribute('aria-hidden', 'true');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = '';
+            }
+            
+            // Ativa os cliques apenas nos links que possuem o atributo data-product
+            document.querySelectorAll('[data-open-lead-modal]').forEach(function (btn) {
+                btn.addEventListener('click', function (e) { 
+                    e.preventDefault(); 
+                    var product = btn.getAttribute('data-product'); 
+                    if(product) {
+                        openModal(product); 
+                    }
+                });
+            });
+            
+            document.querySelectorAll('[data-modal-close]').forEach(function (btn) {
+                btn.addEventListener('click', function () { 
+                    var modal = btn.closest('.lead-modal-pós'); 
+                    closeModal(modal); 
+                });
+            });
+            
+            document.querySelectorAll('.lead-modal-pós').forEach(function (modal) {
+                modal.addEventListener('click', function (e) { 
+                    if (e.target === modal) closeModal(modal); 
+                });
+            });
+            
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') { 
+                    var m = getVisibleModal(); 
+                    if (m) closeModal(m); 
+                }
+            });
+            
+            document.querySelectorAll('.lead-phone').forEach(function (input) {
+                input.addEventListener('input', function () {
+                    var v = this.value.replace(/\D/g, '');
+                    this.value = v.length <= 2 ? v : v.slice(0, 2) + ' ' + v.slice(2, 7) + (v.length > 7 ? '-' + v.slice(7, 11) : '');
+                    var err = this.closest('form').querySelector('.lead-phone-err');
+                    if (err) err.classList.add('hidden');
+                });
+            });
+            
+            document.querySelectorAll('form[data-product]').forEach(function (form) {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    var product = form.getAttribute('data-product');
+                    var nome = (form.querySelector('input[name="nome"]') && form.querySelector('input[name="nome"]').value || '').trim();
+                    var email = (form.querySelector('input[name="email"]') && form.querySelector('input[name="email"]').value || '').trim();
+                    var raw = (form.querySelector('input[name="telefone"]') && form.querySelector('input[name="telefone"]').value || '').replace(/\D/g, '');
+                    
+                    if (!nome || !email || raw.length < 10) {
+                        var err = form.querySelector('.lead-phone-err');
+                        if (err) { err.classList.remove('hidden'); err.textContent = 'Preencha nome, e-mail e telefone (DDD + número).'; }
+                        else alert('Preencha nome, e-mail e telefone (DDD + número).');
+                        return;
+                    }
+                    
+                    var telefone = '+55' + raw;
+                    var getUtm = function (name) { var el = form.querySelector('.lead-utm[data-utm="' + name + '"]'); return (el && el.value) ? el.value.trim() : ''; };
+                    var utm_source = getUtm('utm_source'), utm_term = getUtm('utm_term'), utm_campaign = getUtm('utm_campaign'), utm_medium = getUtm('utm_medium'), utm_content = getUtm('utm_content'), url = getUtm('url') || window.location.href;
+                    var payload = { nome: nome, email: email, telefone: telefone, utm_source: utm_source, utm_term: utm_term, utm_campaign: utm_campaign, utm_medium: utm_medium, utm_content: utm_content, url: url };
+                    
+                    var config = PRODUCT_CONFIG[product];
+                    if(!config) return;
+
+                    var submitBtn = form.querySelector('button[type="submit"]');
+                    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Enviando...'; }
+                    
+                    var redirectParams = new URLSearchParams({ name: nome, email: email, phone: telefone, utm_source: utm_source, utm_term: utm_term, utm_campaign: utm_campaign, utm_medium: utm_medium, utm_content: utm_content, url: url });
+                    var redirectUrl = config.redirect + (config.redirect.indexOf('?') >= 0 ? '&' : '?') + redirectParams.toString();
+                    
+                    fetch(config.webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+                        .then(function () { window.location.href = redirectUrl; })
+                        .catch(function () { window.location.href = redirectUrl; });
+                });
+            });
+        })();
+        
+        (function () {
+            // Banner de Cookies
+            var BANNER_ID = 'cookie-lgpd-banner', STORAGE_KEY = 'cookie_lgpd_consent';
+            var banner = document.getElementById(BANNER_ID), acceptBtn = document.getElementById('cookie-lgpd-accept');
+            if (!banner || !acceptBtn) return;
+            try { 
+                if (localStorage.getItem(STORAGE_KEY) === 'true') { 
+                    banner.classList.add('hidden'); 
+                    return; 
+                } 
+                banner.classList.remove('hidden'); 
+            } catch (e) { 
+                banner.classList.remove('hidden'); 
+            }
+            acceptBtn.addEventListener('click', function () { 
+                try { localStorage.setItem(STORAGE_KEY, 'true'); } catch (e) {} 
+                banner.classList.add('hidden'); 
+            });
+        })();
+
+        (function () {
+            // Animações ao entrar na viewport (Intersection Observer)
+            var observerOptions = { root: null, rootMargin: '0px 0px -8% 0px', threshold: 0.1 };
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('[data-animate]').forEach(function (el) { observer.observe(el); });
+        })();
+
+        (function () {
+            // Seção Módulos: em dispositivos touch, tap no card ativa o estado "hover" (modulos-card-active)
+            var wrap = document.querySelector('#modulos .modulos-cards-wrap');
+            if (!wrap) return;
+            var cards = wrap.querySelectorAll('.modulos-card');
+            function hasTouch() {
+                try { return 'ontouchstart' in window || navigator.maxTouchPoints > 0; } catch (e) { return false; }
+            }
+            if (!hasTouch()) return;
+            cards.forEach(function (card) {
+                card.addEventListener('touchstart', function () {
+                    cards.forEach(function (c) { c.classList.remove('modulos-card-active'); });
+                    card.classList.add('modulos-card-active');
+                }, { passive: true });
+            });
+            document.addEventListener('click', function (e) {
+                if (!e.target.closest('#modulos .modulos-card')) {
+                    cards.forEach(function (c) { c.classList.remove('modulos-card-active'); });
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>
