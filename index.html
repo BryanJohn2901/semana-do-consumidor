@@ -444,10 +444,10 @@
                     <img src="img/logos/logoTf.svg" alt="Logo Treinamento Funcional" class="modulos-card-logo h-8 lg:h-10 w-auto max-w-[80%] object-contain object-left mb-4 relative z-10 filter drop-shadow-md">
                     
                     <div class="modulos-card-desc relative z-10 overflow-hidden">
-                        <p class="text-zinc-200 text-sm md:text-base leading-relaxed drop-shadow-lg font-light max-w-sm border-l-2 border-brand pl-4 ml-1">
+                        <p class="text-zinc-200 text-sm md:text-base leading-relaxed drop-shadow-lg font-light max-w-sm border-l-2 border-[#FFB800] pl-4 ml-1">
                             Reabilitação, condicionamento físico e performance. Torne-se um expert e saiba como entregar resultados de alta performance.
                         </p>
-                        <div class="modulos-card-cta flex items-center text-brand text-xs font-bold uppercase tracking-widest ml-1 mt-4">
+                        <div class="modulos-card-cta flex items-center text-[#FFB800] text-xs font-bold uppercase tracking-widest ml-1 mt-4">
                             Clique e veja mais
                             <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
                         </div>
@@ -682,7 +682,7 @@
                         <div class="relative w-full max-w-md mx-auto transform transition-transform duration-700 group-hover:rotate-y-[-10deg] group-hover:rotate-x-[5deg] group-hover:-translate-y-4">
                             <div class="bg-zinc-800 p-2 md:p-3 rounded-2xl md:rounded-3xl shadow-[20px_20px_50px_rgba(0,0,0,0.7)] border border-zinc-700/50 relative overflow-hidden">
                                 <div class="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-50 pointer-events-none z-20"></div>
-                                <img src="https://images.unsplash.com/photo-1587614382346-4ec70e388b28?q=80&w=800&auto=format&fit=crop" alt="Masterclass Mockup" class="w-full h-auto rounded-xl md:rounded-2xl object-cover relative z-10">
+                                <img src="img/Masterclass.jpg" alt="MasterClass do Zero a Consultoria Online" class="w-full h-auto rounded-xl md:rounded-2xl object-cover relative z-10">
                             </div>
                             
                             <div class="absolute -bottom-6 -right-6 md:-right-10 bg-zinc-900 border border-zinc-700 p-4 rounded-xl shadow-xl flex items-center gap-3 transform translate-z-[50px] group-hover:translate-y-2 transition-transform duration-700 z-30">
@@ -705,11 +705,11 @@
                         </div>
                         
                         <h4 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white leading-[1.1]">
-                            Masterclass Ao Vivo – Como Escalar sua Carreira
+                            MasterClass do 0 a consultoria online
                         </h4>
                         
                         <p class="text-zinc-400 mb-8 text-base md:text-lg leading-relaxed font-light">
-                            Aprenda com especialistas como sair da troca de tempo por dinheiro, fidelizar alunos e criar um modelo de negócios altamente escalável dentro da Educação Física.
+                            3 horas de aula prática com método validado, passo a passo para estruturar, vender e escalar sua consultoria online.
                         </p>
                         
                         <div class="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800/80 rounded-2xl p-6 w-full max-w-md">
@@ -1066,13 +1066,15 @@
 
     <script>
         (function () {
-            // WEBHOOKS E REDIRECIONAMENTOS
+            // WEBHOOK SEMANA DO CONSUMIDOR (Make.com) + códigos SC
+            var WEBHOOK_BASE = 'https://hook.us1.make.com/w9zklhfn78dzy1lf8fl5n1yhf3bjmx15';
+            var PRODUCT_TO_SC = { BM9: 'BM9-SC', FE3: 'FE3-SC', TF5: 'TF4-SC', MPA: 'MPA-SC', SM7: 'SM7-SC' };
             var PRODUCT_CONFIG = {
-                BM9: { redirect: 'https://chk.eduzz.com/60EEGRPB03', webhook: 'https://hook.us1.make.com/t5rdmgsbkvyqy5xisoobb4scyskaa5lt?produto=BM9' },
-                SM7: { redirect: 'https://chk.eduzz.com/8WPAQPDQWP', webhook: 'https://hook.us1.make.com/t5rdmgsbkvyqy5xisoobb4scyskaa5lt?produto=SM7' },
-                MPA: { redirect: 'https://chk.eduzz.com/39YDPQX49O', webhook: 'https://hook.us1.make.com/bhigavwc6bfhskmnicov25r6jv9fnt1p?produto=MPA' },
-                FE3: { redirect: 'https://pos.personaltraineracademy.com.br/obg-obrigado-fisio/', webhook: 'https://hook.us1.make.com/t5rdmgsbkvyqy5xisoobb4scyskaa5lt?produto=FE3' },
-                TF5: { redirect: 'https://chk.eduzz.com/6W4821RA0Z', webhook: 'https://hook.us1.make.com/bhigavwc6bfhskmnicov25r6jv9fnt1p?produto=TF5' }
+                BM9: { redirect: 'https://chk.eduzz.com/60EEGRPB03' },
+                SM7: { redirect: 'https://chk.eduzz.com/8WPAQPDQWP' },
+                MPA: { redirect: 'https://chk.eduzz.com/39YDPQX49O' },
+                FE3: { redirect: 'https://pos.personaltraineracademy.com.br/obg-obrigado-fisio/' },
+                TF5: { redirect: 'https://chk.eduzz.com/6W4821RA0Z' }
             };
             
             var UTM_STORAGE_KEY = 'lead_utm_params';
@@ -1243,7 +1245,23 @@
                     var redirectParams = new URLSearchParams({ name: nome, email: email, phone: telefone, utm_source: utm_source, utm_term: utm_term, utm_campaign: utm_campaign, utm_medium: utm_medium, utm_content: utm_content, url: url });
                     var redirectUrl = config.redirect + (config.redirect.indexOf('?') >= 0 ? '&' : '?') + redirectParams.toString();
                     
-                    fetch(config.webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+                    // Webhook Make.com: name, email, phone + UTMs (formato solicitado)
+                    var webhookParams = new URLSearchParams({
+                        name: nome,
+                        email: email,
+                        phone: telefone,
+                        utm_source: utm_source,
+                        utm_term: utm_term,
+                        utm_campaign: utm_campaign,
+                        utm_medium: utm_medium,
+                        utm_content: utm_content,
+                        url: url
+                    });
+                    var scCode = PRODUCT_TO_SC[product];
+                    if (scCode) webhookParams.set('produto', scCode);
+                    var webhookUrl = WEBHOOK_BASE + (WEBHOOK_BASE.indexOf('?') >= 0 ? '&' : '?') + webhookParams.toString();
+                    
+                    fetch(webhookUrl, { method: 'GET', mode: 'no-cors' })
                         .then(function () { window.location.href = redirectUrl; })
                         .catch(function () { window.location.href = redirectUrl; });
                 });
