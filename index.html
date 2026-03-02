@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Semana do Consumidor - Personal Trainer Academy</title>
     
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -43,6 +49,15 @@
             display: flex;
             width: max-content;
             animation: ticker 25s linear infinite;
+        }
+
+        /* ========== Animação Seta Desktop ========== */
+        @keyframes bounce-horizontal {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+        .animate-bounce-h {
+            animation: bounce-horizontal 1.5s infinite;
         }
         
         /* ========== Efeitos de Brilho ========== */
@@ -186,16 +201,17 @@
             #modulos .modulos-card {
                 display: block;
                 width: 100%;
-                min-height: 260px; /* Garante tamanho mínimo */
+                min-height: 400px; /* Aumentado para ver mais dos professores */
             }
             /* Chave para não cortar: O conteúdo dita a altura real da caixa */
             #modulos .modulos-card-content {
                 position: relative;
-                min-height: 260px; 
+                min-height: 400px; /* Aumentado para acompanhar o card */
             }
             #modulos .modulos-card img.modulos-card-bg {
                 opacity: 0.5;
                 filter: grayscale(0%);
+                object-position: top center; /* Força a imagem a focar no topo/rosto no mobile */
             }
             #modulos .modulos-card .modulos-card-overlay {
                 background: linear-gradient(to top, rgba(9,9,11,0.95), rgba(9,9,11,0.4), transparent);
@@ -211,6 +227,8 @@
     </style>
 </head>
 <body class="font-sans bg-zinc-950 text-zinc-300 antialiased selection:bg-brand selection:text-zinc-900 relative overflow-x-hidden">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div id="top-bar" class="bg-zinc-950 border-b border-zinc-800/80 text-zinc-300 py-2.5 px-4 relative z-50 flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-brand/10 to-transparent pointer-events-none"></div>
@@ -311,6 +329,13 @@
             <p class="text-zinc-400 text-base md:text-lg leading-relaxed relative z-10 max-w-[280px] font-light">
                 Escolha a sua especialização e transforme sua carreira com a metodologia de quem domina o mercado prático.
             </p>
+
+            <div class="hidden lg:flex items-center gap-3 mt-10 text-zinc-500 relative z-10">
+                <span class="text-[11px] font-bold uppercase tracking-[0.15em]">Passe o mouse e clique</span>
+                <svg class="w-5 h-5 text-brand animate-bounce-h" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+            </div>
         </div>
         
         <div class="modulos-cards-wrap flex-1 flex flex-col lg:flex-row w-full h-full">
@@ -935,16 +960,16 @@
             <button type="button" data-modal-close class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-[#1E64F0]/20 flex items-center justify-center text-gray-400 hover:text-white transition" aria-label="Fechar"><i class="fas fa-times"></i></button>
             <h3 class="text-2xl font-bold text-white mb-1">Preencha seus dados</h3>
             <p class="text-sm text-gray-400 mb-6">Para liberar seu link com a condição especial.</p>
-            <form id="form_BM9" class="space-y-4" data-product="BM9">
-                <input type="hidden" name="utm_source" class="lead-utm" data-utm="utm_source" value="">
-                <input type="hidden" name="utm_term" class="lead-utm" data-utm="utm_term" value="">
-                <input type="hidden" name="utm_campaign" class="lead-utm" data-utm="utm_campaign" value="">
-                <input type="hidden" name="utm_medium" class="lead-utm" data-utm="utm_medium" value="">
-                <input type="hidden" name="utm_content" class="lead-utm" data-utm="utm_content" value="">
-                <input type="hidden" name="url" class="lead-utm" data-utm="url" value="">
-                <div><label class="block text-sm font-medium text-gray-300 mb-1">Nome</label><input type="text" name="nome" required placeholder="Seu nome completo" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-white/10 text-white placeholder-gray-500 focus:border-[#1E64F0] focus:ring-1 focus:ring-[#1E64F0] outline-none transition"></div>
-                <div><label class="block text-sm font-medium text-gray-300 mb-1">Email</label><input type="email" name="email" required placeholder="seu@email.com" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-white/10 text-white placeholder-gray-500 focus:border-[#1E64F0] focus:ring-1 focus:ring-[#1E64F0] outline-none transition"></div>
-                <div><label class="block text-sm font-medium text-gray-300 mb-1">Telefone</label><div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-[#1E64F0] focus-within:ring-1 focus-within:ring-[#1E64F0] bg-[#0a0a0f]"><span class="inline-flex items-center px-4 py-3 bg-[#1E64F0] text-white font-semibold select-none shrink-0">+55</span><input type="tel" name="telefone" required placeholder="11 99999-9999" inputmode="numeric" pattern="[0-9\s]*" maxlength="15" class="lead-input lead-phone flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-500 outline-none min-w-0"></div><p class="text-gray-400 text-xs mt-1">DDD + número (apenas números)</p><p class="lead-phone-err text-red-400 text-xs mt-1 hidden">Informe o DDD e o número.</p></div>
+            <form id="form_bio" class="space-y-4 gtm-lead-form" data-product="BM9">
+                <input type="hidden" name="utm_source" id="form_bio_utm_source" class="lead-utm" data-utm="utm_source" value="">
+                <input type="hidden" name="utm_term" id="form_bio_utm_term" class="lead-utm" data-utm="utm_term" value="">
+                <input type="hidden" name="utm_campaign" id="form_bio_utm_campaign" class="lead-utm" data-utm="utm_campaign" value="">
+                <input type="hidden" name="utm_medium" id="form_bio_utm_medium" class="lead-utm" data-utm="utm_medium" value="">
+                <input type="hidden" name="utm_content" id="form_bio_utm_content" class="lead-utm" data-utm="utm_content" value="">
+                <input type="hidden" name="url" id="form_bio_url" class="lead-utm" data-utm="url" value="">
+                <div><label class="block text-sm font-medium text-gray-300 mb-1" for="form_bio_nome">Nome</label><input type="text" name="nome" id="form_bio_nome" required placeholder="Seu nome completo" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-white/10 text-white placeholder-gray-500 focus:border-[#1E64F0] focus:ring-1 focus:ring-[#1E64F0] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1" for="form_bio_email">Email</label><input type="email" name="email" id="form_bio_email" required placeholder="seu@email.com" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-white/10 text-white placeholder-gray-500 focus:border-[#1E64F0] focus:ring-1 focus:ring-[#1E64F0] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1" for="form_bio_telefone">Telefone</label><div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-[#1E64F0] focus-within:ring-1 focus-within:ring-[#1E64F0] bg-[#0a0a0f]"><span class="inline-flex items-center px-4 py-3 bg-[#1E64F0] text-white font-semibold select-none shrink-0">+55</span><input type="tel" name="telefone" id="form_bio_telefone" required placeholder="11 99999-9999" inputmode="numeric" pattern="[0-9\s]*" maxlength="15" class="lead-input lead-phone flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-500 outline-none min-w-0"></div><p class="text-gray-400 text-xs mt-1">DDD + número (apenas números)</p><p class="lead-phone-err text-red-400 text-xs mt-1 hidden">Informe o DDD e o número.</p></div>
                 <button type="submit" class="w-full bg-[#1E64F0] text-white font-bold py-4 rounded-xl uppercase tracking-widest hover:shadow-[0_0_20px_rgba(30,100,240,0.6)] transition mt-2">Avançar para o Grupo</button>
             </form>
         </div>
@@ -955,16 +980,16 @@
             <button type="button" data-modal-close class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-[#D946EF]/20 flex items-center justify-center text-gray-400 hover:text-white transition" aria-label="Fechar"><i class="fas fa-times"></i></button>
             <h3 class="text-2xl font-bold text-white mb-1">Preencha seus dados</h3>
             <p class="text-sm text-gray-400 mb-6">Para liberar seu link com a condição especial.</p>
-            <form id="form_SM7" class="space-y-4" data-product="SM7">
-                <input type="hidden" name="utm_source" class="lead-utm" data-utm="utm_source" value="">
-                <input type="hidden" name="utm_term" class="lead-utm" data-utm="utm_term" value="">
-                <input type="hidden" name="utm_campaign" class="lead-utm" data-utm="utm_campaign" value="">
-                <input type="hidden" name="utm_medium" class="lead-utm" data-utm="utm_medium" value="">
-                <input type="hidden" name="utm_content" class="lead-utm" data-utm="utm_content" value="">
-                <input type="hidden" name="url" class="lead-utm" data-utm="url" value="">
-                <div><label class="block text-sm font-medium text-gray-300 mb-1">Nome</label><input type="text" name="nome" required placeholder="Seu nome completo" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a050d] border border-white/10 text-white placeholder-gray-500 focus:border-[#D946EF] focus:ring-1 focus:ring-[#D946EF] outline-none transition"></div>
-                <div><label class="block text-sm font-medium text-gray-300 mb-1">Email</label><input type="email" name="email" required placeholder="seu@email.com" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a050d] border border-white/10 text-white placeholder-gray-500 focus:border-[#D946EF] focus:ring-1 focus:ring-[#D946EF] outline-none transition"></div>
-                <div><label class="block text-sm font-medium text-gray-300 mb-1">Telefone</label><div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-[#D946EF] focus-within:ring-1 focus-within:ring-[#D946EF] bg-[#0a050d]"><span class="inline-flex items-center px-4 py-3 bg-[#D946EF] text-white font-bold select-none shrink-0">+55</span><input type="tel" name="telefone" required placeholder="11 99999-9999" inputmode="numeric" pattern="[0-9\s]*" maxlength="15" class="lead-input lead-phone flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-500 outline-none min-w-0"></div><p class="text-gray-400 text-xs mt-1">DDD + número (apenas números)</p><p class="lead-phone-err text-red-400 text-xs mt-1 hidden">Informe o DDD e o número.</p></div>
+            <form id="form_sm" class="space-y-4 gtm-lead-form" data-product="SM7">
+                <input type="hidden" name="utm_source" id="form_sm_utm_source" class="lead-utm" data-utm="utm_source" value="">
+                <input type="hidden" name="utm_term" id="form_sm_utm_term" class="lead-utm" data-utm="utm_term" value="">
+                <input type="hidden" name="utm_campaign" id="form_sm_utm_campaign" class="lead-utm" data-utm="utm_campaign" value="">
+                <input type="hidden" name="utm_medium" id="form_sm_utm_medium" class="lead-utm" data-utm="utm_medium" value="">
+                <input type="hidden" name="utm_content" id="form_sm_utm_content" class="lead-utm" data-utm="utm_content" value="">
+                <input type="hidden" name="url" id="form_sm_url" class="lead-utm" data-utm="url" value="">
+                <div><label class="block text-sm font-medium text-gray-300 mb-1" for="form_sm_nome">Nome</label><input type="text" name="nome" id="form_sm_nome" required placeholder="Seu nome completo" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a050d] border border-white/10 text-white placeholder-gray-500 focus:border-[#D946EF] focus:ring-1 focus:ring-[#D946EF] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1" for="form_sm_email">Email</label><input type="email" name="email" id="form_sm_email" required placeholder="seu@email.com" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a050d] border border-white/10 text-white placeholder-gray-500 focus:border-[#D946EF] focus:ring-1 focus:ring-[#D946EF] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1" for="form_sm_telefone">Telefone</label><div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-[#D946EF] focus-within:ring-1 focus-within:ring-[#D946EF] bg-[#0a050d]"><span class="inline-flex items-center px-4 py-3 bg-[#D946EF] text-white font-bold select-none shrink-0">+55</span><input type="tel" name="telefone" id="form_sm_telefone" required placeholder="11 99999-9999" inputmode="numeric" pattern="[0-9\s]*" maxlength="15" class="lead-input lead-phone flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-500 outline-none min-w-0"></div><p class="text-gray-400 text-xs mt-1">DDD + número (apenas números)</p><p class="lead-phone-err text-red-400 text-xs mt-1 hidden">Informe o DDD e o número.</p></div>
                 <button type="submit" class="w-full bg-[#D946EF] text-white font-bold py-4 rounded-xl uppercase tracking-widest hover:shadow-[0_0_20px_rgba(217,70,239,0.4)] transition mt-2">Avançar para o Grupo</button>
             </form>
         </div>
@@ -975,16 +1000,16 @@
             <button type="button" data-modal-close class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-[#5E7FAA]/20 flex items-center justify-center text-gray-400 hover:text-white transition" aria-label="Fechar"><i class="fas fa-times"></i></button>
             <h3 class="text-2xl font-bold text-white mb-1">Preencha seus dados</h3>
             <p class="text-sm text-gray-400 mb-6">Para liberar seu link com a condição especial.</p>
-            <form id="form_MPA" class="space-y-4" data-product="MPA">
-                <input type="hidden" name="utm_source" class="lead-utm" data-utm="utm_source" value="">
-                <input type="hidden" name="utm_term" class="lead-utm" data-utm="utm_term" value="">
-                <input type="hidden" name="utm_campaign" class="lead-utm" data-utm="utm_campaign" value="">
-                <input type="hidden" name="utm_medium" class="lead-utm" data-utm="utm_medium" value="">
-                <input type="hidden" name="utm_content" class="lead-utm" data-utm="utm_content" value="">
-                <input type="hidden" name="url" class="lead-utm" data-utm="url" value="">
-                <div><label class="block text-sm font-medium text-gray-300 mb-1">Nome</label><input type="text" name="nome" required placeholder="Seu nome completo" class="lead-input w-full px-4 py-3 rounded-lg bg-[#050608] border border-white/10 text-white placeholder-gray-500 focus:border-[#5E7FAA] focus:ring-1 focus:ring-[#5E7FAA] outline-none transition"></div>
-                <div><label class="block text-sm font-medium text-gray-300 mb-1">Email</label><input type="email" name="email" required placeholder="seu@email.com" class="lead-input w-full px-4 py-3 rounded-lg bg-[#050608] border border-white/10 text-white placeholder-gray-500 focus:border-[#5E7FAA] focus:ring-1 focus:ring-[#5E7FAA] outline-none transition"></div>
-                <div><label class="block text-sm font-medium text-gray-300 mb-1">Telefone</label><div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-[#5E7FAA] focus-within:ring-1 focus-within:ring-[#5E7FAA] bg-[#050608]"><span class="inline-flex items-center px-4 py-3 bg-[#5E7FAA] text-white font-semibold select-none shrink-0">+55</span><input type="tel" name="telefone" required placeholder="11 99999-9999" inputmode="numeric" pattern="[0-9\s]*" maxlength="15" class="lead-input lead-phone flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-500 outline-none min-w-0"></div><p class="text-gray-400 text-xs mt-1">DDD + número (apenas números)</p><p class="lead-phone-err text-red-400 text-xs mt-1 hidden">Informe o DDD e o número.</p></div>
+            <form id="form_mpa" class="space-y-4 gtm-lead-form" data-product="MPA">
+                <input type="hidden" name="utm_source" id="form_mpa_utm_source" class="lead-utm" data-utm="utm_source" value="">
+                <input type="hidden" name="utm_term" id="form_mpa_utm_term" class="lead-utm" data-utm="utm_term" value="">
+                <input type="hidden" name="utm_campaign" id="form_mpa_utm_campaign" class="lead-utm" data-utm="utm_campaign" value="">
+                <input type="hidden" name="utm_medium" id="form_mpa_utm_medium" class="lead-utm" data-utm="utm_medium" value="">
+                <input type="hidden" name="utm_content" id="form_mpa_utm_content" class="lead-utm" data-utm="utm_content" value="">
+                <input type="hidden" name="url" id="form_mpa_url" class="lead-utm" data-utm="url" value="">
+                <div><label class="block text-sm font-medium text-gray-300 mb-1" for="form_mpa_nome">Nome</label><input type="text" name="nome" id="form_mpa_nome" required placeholder="Seu nome completo" class="lead-input w-full px-4 py-3 rounded-lg bg-[#050608] border border-white/10 text-white placeholder-gray-500 focus:border-[#5E7FAA] focus:ring-1 focus:ring-[#5E7FAA] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1" for="form_mpa_email">Email</label><input type="email" name="email" id="form_mpa_email" required placeholder="seu@email.com" class="lead-input w-full px-4 py-3 rounded-lg bg-[#050608] border border-white/10 text-white placeholder-gray-500 focus:border-[#5E7FAA] focus:ring-1 focus:ring-[#5E7FAA] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1" for="form_mpa_telefone">Telefone</label><div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-[#5E7FAA] focus-within:ring-1 focus-within:ring-[#5E7FAA] bg-[#050608]"><span class="inline-flex items-center px-4 py-3 bg-[#5E7FAA] text-white font-semibold select-none shrink-0">+55</span><input type="tel" name="telefone" id="form_mpa_telefone" required placeholder="11 99999-9999" inputmode="numeric" pattern="[0-9\s]*" maxlength="15" class="lead-input lead-phone flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-500 outline-none min-w-0"></div><p class="text-gray-400 text-xs mt-1">DDD + número (apenas números)</p><p class="lead-phone-err text-red-400 text-xs mt-1 hidden">Informe o DDD e o número.</p></div>
                 <button type="submit" class="w-full bg-[#5E7FAA] text-white font-bold py-4 rounded-xl uppercase tracking-widest hover:shadow-[0_0_20px_rgba(94,127,170,0.6)] transition mt-2">Avançar para o Grupo</button>
             </form>
         </div>
@@ -995,16 +1020,16 @@
             <button type="button" data-modal-close class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-[#00C2FF]/20 flex items-center justify-center text-gray-400 hover:text-white transition" aria-label="Fechar"><i class="fas fa-times"></i></button>
             <h3 class="text-2xl font-bold text-white mb-1">Preencha seus dados</h3>
             <p class="text-sm text-gray-400 mb-6">Para liberar seu link com a condição especial.</p>
-            <form id="form_FE3" class="space-y-4" data-product="FE3">
-                <input type="hidden" name="utm_source" class="lead-utm" data-utm="utm_source" value="">
-                <input type="hidden" name="utm_term" class="lead-utm" data-utm="utm_term" value="">
-                <input type="hidden" name="utm_campaign" class="lead-utm" data-utm="utm_campaign" value="">
-                <input type="hidden" name="utm_medium" class="lead-utm" data-utm="utm_medium" value="">
-                <input type="hidden" name="utm_content" class="lead-utm" data-utm="utm_content" value="">
-                <input type="hidden" name="url" class="lead-utm" data-utm="url" value="">
-                <div><label class="block text-sm font-medium text-gray-300 mb-1">Nome</label><input type="text" name="nome" required placeholder="Seu nome completo" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-white/10 text-white placeholder-gray-500 focus:border-[#00C2FF] focus:ring-1 focus:ring-[#00C2FF] outline-none transition"></div>
-                <div><label class="block text-sm font-medium text-gray-300 mb-1">Email</label><input type="email" name="email" required placeholder="seu@email.com" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-white/10 text-white placeholder-gray-500 focus:border-[#00C2FF] focus:ring-1 focus:ring-[#00C2FF] outline-none transition"></div>
-                <div><label class="block text-sm font-medium text-gray-300 mb-1">Telefone</label><div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-[#00C2FF] focus-within:ring-1 focus-within:ring-[#00C2FF] bg-[#0a0a0f]"><span class="inline-flex items-center px-4 py-3 bg-[#00C2FF] text-[#050505] font-bold select-none shrink-0">+55</span><input type="tel" name="telefone" required placeholder="11 99999-9999" maxlength="15" inputmode="numeric" class="lead-input lead-phone flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-500 outline-none min-w-0"></div><p class="text-gray-400 text-xs mt-1">DDD + número (apenas números)</p><p class="lead-phone-err text-red-400 text-xs mt-1 hidden">Informe o DDD e o número.</p></div>
+            <form id="form_fisio" class="space-y-4 gtm-lead-form" data-product="FE3">
+                <input type="hidden" name="utm_source" id="form_fisio_utm_source" class="lead-utm" data-utm="utm_source" value="">
+                <input type="hidden" name="utm_term" id="form_fisio_utm_term" class="lead-utm" data-utm="utm_term" value="">
+                <input type="hidden" name="utm_campaign" id="form_fisio_utm_campaign" class="lead-utm" data-utm="utm_campaign" value="">
+                <input type="hidden" name="utm_medium" id="form_fisio_utm_medium" class="lead-utm" data-utm="utm_medium" value="">
+                <input type="hidden" name="utm_content" id="form_fisio_utm_content" class="lead-utm" data-utm="utm_content" value="">
+                <input type="hidden" name="url" id="form_fisio_url" class="lead-utm" data-utm="url" value="">
+                <div><label class="block text-sm font-medium text-gray-300 mb-1" for="form_fisio_nome">Nome</label><input type="text" name="nome" id="form_fisio_nome" required placeholder="Seu nome completo" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-white/10 text-white placeholder-gray-500 focus:border-[#00C2FF] focus:ring-1 focus:ring-[#00C2FF] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1" for="form_fisio_email">Email</label><input type="email" name="email" id="form_fisio_email" required placeholder="seu@email.com" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0a0f] border border-white/10 text-white placeholder-gray-500 focus:border-[#00C2FF] focus:ring-1 focus:ring-[#00C2FF] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1" for="form_fisio_telefone">Telefone</label><div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-[#00C2FF] focus-within:ring-1 focus-within:ring-[#00C2FF] bg-[#0a0a0f]"><span class="inline-flex items-center px-4 py-3 bg-[#00C2FF] text-[#050505] font-bold select-none shrink-0">+55</span><input type="tel" name="telefone" id="form_fisio_telefone" required placeholder="11 99999-9999" maxlength="15" inputmode="numeric" class="lead-input lead-phone flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-500 outline-none min-w-0"></div><p class="text-gray-400 text-xs mt-1">DDD + número (apenas números)</p><p class="lead-phone-err text-red-400 text-xs mt-1 hidden">Informe o DDD e o número.</p></div>
                 <button type="submit" class="w-full bg-[#00C2FF] text-[#050505] font-bold py-4 rounded-xl uppercase tracking-widest hover:shadow-[0_0_20px_rgba(0,194,255,0.6)] transition mt-2">Avançar para o Grupo</button>
             </form>
         </div>
@@ -1015,16 +1040,16 @@
             <button type="button" data-modal-close class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-[#FFB800]/20 flex items-center justify-center text-gray-400 hover:text-white transition" aria-label="Fechar"><i class="fas fa-times"></i></button>
             <h3 class="text-2xl font-bold text-white mb-1">Preencha seus dados</h3>
             <p class="text-sm text-gray-400 mb-6">Para liberar seu link com a condição especial.</p>
-            <form id="form_TF5" class="space-y-4" data-product="TF5">
-                <input type="hidden" name="utm_source" class="lead-utm" data-utm="utm_source" value="">
-                <input type="hidden" name="utm_term" class="lead-utm" data-utm="utm_term" value="">
-                <input type="hidden" name="utm_campaign" class="lead-utm" data-utm="utm_campaign" value="">
-                <input type="hidden" name="utm_medium" class="lead-utm" data-utm="utm_medium" value="">
-                <input type="hidden" name="utm_content" class="lead-utm" data-utm="utm_content" value="">
-                <input type="hidden" name="url" class="lead-utm" data-utm="url" value="">
-                <div><label class="block text-sm font-medium text-gray-300 mb-1">Nome</label><input type="text" name="nome" required placeholder="Seu nome completo" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0905] border border-white/10 text-white placeholder-gray-500 focus:border-[#FFB800] focus:ring-1 focus:ring-[#FFB800] outline-none transition"></div>
-                <div><label class="block text-sm font-medium text-gray-300 mb-1">Email</label><input type="email" name="email" required placeholder="seu@email.com" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0905] border border-white/10 text-white placeholder-gray-500 focus:border-[#FFB800] focus:ring-1 focus:ring-[#FFB800] outline-none transition"></div>
-                <div><label class="block text-sm font-medium text-gray-300 mb-1">Telefone</label><div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-[#FFB800] focus-within:ring-1 focus-within:ring-[#FFB800] bg-[#0a0905]"><span class="inline-flex items-center px-4 py-3 bg-[#FFB800] text-black font-bold select-none shrink-0">+55</span><input type="tel" name="telefone" required placeholder="11 99999-9999" inputmode="numeric" maxlength="15" class="lead-input lead-phone flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-500 outline-none min-w-0"></div><p class="text-gray-400 text-xs mt-1">DDD + número (apenas números)</p><p class="lead-phone-err text-red-400 text-xs mt-1 hidden">Informe o DDD e o número.</p></div>
+            <form id="form_tf" class="space-y-4 gtm-lead-form" data-product="TF5">
+                <input type="hidden" name="utm_source" id="form_tf_utm_source" class="lead-utm" data-utm="utm_source" value="">
+                <input type="hidden" name="utm_term" id="form_tf_utm_term" class="lead-utm" data-utm="utm_term" value="">
+                <input type="hidden" name="utm_campaign" id="form_tf_utm_campaign" class="lead-utm" data-utm="utm_campaign" value="">
+                <input type="hidden" name="utm_medium" id="form_tf_utm_medium" class="lead-utm" data-utm="utm_medium" value="">
+                <input type="hidden" name="utm_content" id="form_tf_utm_content" class="lead-utm" data-utm="utm_content" value="">
+                <input type="hidden" name="url" id="form_tf_url" class="lead-utm" data-utm="url" value="">
+                <div><label class="block text-sm font-medium text-gray-300 mb-1" for="form_tf_nome">Nome</label><input type="text" name="nome" id="form_tf_nome" required placeholder="Seu nome completo" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0905] border border-white/10 text-white placeholder-gray-500 focus:border-[#FFB800] focus:ring-1 focus:ring-[#FFB800] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1" for="form_tf_email">Email</label><input type="email" name="email" id="form_tf_email" required placeholder="seu@email.com" class="lead-input w-full px-4 py-3 rounded-lg bg-[#0a0905] border border-white/10 text-white placeholder-gray-500 focus:border-[#FFB800] focus:ring-1 focus:ring-[#FFB800] outline-none transition"></div>
+                <div><label class="block text-sm font-medium text-gray-300 mb-1" for="form_tf_telefone">Telefone</label><div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-[#FFB800] focus-within:ring-1 focus-within:ring-[#FFB800] bg-[#0a0905]"><span class="inline-flex items-center px-4 py-3 bg-[#FFB800] text-black font-bold select-none shrink-0">+55</span><input type="tel" name="telefone" id="form_tf_telefone" required placeholder="11 99999-9999" inputmode="numeric" maxlength="15" class="lead-input lead-phone flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-500 outline-none min-w-0"></div><p class="text-gray-400 text-xs mt-1">DDD + número (apenas números)</p><p class="lead-phone-err text-red-400 text-xs mt-1 hidden">Informe o DDD e o número.</p></div>
                 <button type="submit" class="w-full bg-[#FFB800] text-black font-bold py-4 rounded-xl uppercase tracking-widest hover:shadow-[0_0_20px_rgba(255,184,0,0.4)] transition mt-2">Avançar para o Grupo</button>
             </form>
         </div>
@@ -1191,6 +1216,23 @@
                     var getUtm = function (name) { var el = form.querySelector('.lead-utm[data-utm="' + name + '"]'); return (el && el.value) ? el.value.trim() : ''; };
                     var utm_source = getUtm('utm_source'), utm_term = getUtm('utm_term'), utm_campaign = getUtm('utm_campaign'), utm_medium = getUtm('utm_medium'), utm_content = getUtm('utm_content'), url = getUtm('url') || window.location.href;
                     var payload = { nome: nome, email: email, telefone: telefone, utm_source: utm_source, utm_term: utm_term, utm_campaign: utm_campaign, utm_medium: utm_medium, utm_content: utm_content, url: url };
+                    
+                    /* Google Tag Manager: evento de envio do formulário de lead */
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        event: 'lead_form_submit',
+                        form_id: form.id || '',
+                        form_product: product,
+                        lead_nome: nome,
+                        lead_email: email,
+                        lead_telefone: telefone,
+                        utm_source: utm_source,
+                        utm_medium: utm_medium,
+                        utm_campaign: utm_campaign,
+                        utm_content: utm_content,
+                        utm_term: utm_term,
+                        page_url: url
+                    });
                     
                     var config = PRODUCT_CONFIG[product];
                     if(!config) return;
